@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         GridView gridview = findViewById(R.id.grid_view);
         gridview.setAdapter(new ToyAdapter(this, toyCollection));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_toy_fab);
 
 //        gridview.setOnItemClickListener(new OnItemClickListener() {
 //            public void onItemClick(AdapterView<?> parent, View v,
