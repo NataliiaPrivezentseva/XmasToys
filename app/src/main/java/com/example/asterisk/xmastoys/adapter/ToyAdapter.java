@@ -45,7 +45,7 @@ public class ToyAdapter extends BaseAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View gridItemView = convertView;
         if (gridItemView == null) {
-            gridItemView = mInflater.inflate(R.layout.grid_item, parent, false);
+            gridItemView = mInflater.inflate(R.layout.grid_item_new, parent, false);
         }
 
         ImageView pictureImageView = gridItemView.findViewById(R.id.picture_image_view);
