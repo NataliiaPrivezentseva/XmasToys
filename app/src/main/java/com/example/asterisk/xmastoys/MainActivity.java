@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.asterisk.xmastoys.adapter.ToyAdapter;
 import com.example.asterisk.xmastoys.model.Toy;
@@ -39,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
         toyCollection.add(new Toy("Третья игрушка", "2016/2017",
                 "А тут должна быть другая история", R.drawable.taxi));
 
-        GridView gridview = findViewById(R.id.grid_view);
-        gridview.setAdapter(new ToyAdapter(this, toyCollection));
-
         FloatingActionButton fab = findViewById(R.id.add_toy_fab);
 
+
+        GridView gridview = findViewById(R.id.grid_view);
+        gridview.setAdapter(new ToyAdapter(this, toyCollection));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {

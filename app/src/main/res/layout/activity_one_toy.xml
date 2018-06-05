@@ -17,7 +17,7 @@
         android:background="@color/colorPrimary"
         android:padding="@dimen/cellText_padding"
         android:textColor="@color/colorTextIcons"
-        android:textSize="@dimen/cellText_textSize"
+        android:textSize="@dimen/normalTextSize"
         android:gravity="end|bottom"
         tools:text="Toy name"/>
 

@@ -22,7 +22,7 @@
         android:background="@color/overlay"
         android:padding="@dimen/cellText_padding"
         android:textColor="@color/colorTextIcons"
-        android:textSize="@dimen/cellText_textSize" />
+        android:textSize="@dimen/normalTextSize" />
 
     <TextView
         android:id="@+id/toy_year_text_view"
@@ -33,6 +33,6 @@
         android:background="@color/overlay"
         android:padding="@dimen/cellText_padding"
         android:textColor="@color/colorTextIcons"
-        android:textSize="@dimen/cellText_textSize" />
+        android:textSize="@dimen/normalTextSize" />
 
 </RelativeLayout>
