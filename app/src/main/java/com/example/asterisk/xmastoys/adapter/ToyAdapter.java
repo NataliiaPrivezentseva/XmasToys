@@ -50,10 +50,12 @@ public class ToyAdapter extends BaseAdapter {
 
         ImageView pictureImageView = gridItemView.findViewById(R.id.picture_image_view);
         TextView toyNameTextView = gridItemView.findViewById(R.id.toy_name_text_view);
+        TextView toyYearTextView = gridItemView.findViewById(R.id.toy_year_text_view);
 
         Toy currentToy = (Toy) getItem(position);
         pictureImageView.setImageResource(currentToy.getmImageResourceId());
         toyNameTextView.setText(currentToy.getmToyName());
+        toyYearTextView.setText(currentToy.getmYear());
 
         return gridItemView;
     }

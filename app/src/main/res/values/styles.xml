@@ -1,11 +1,25 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Base application theme without a title bar. -->
+    <style name="AppThemeBar" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="titleTextColor">@color/colorTextIcons</item>
+    </style>
+
+    <style name="AppThemeBar2" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- title text color -->
+        <item name="android:textColorPrimary">@color/colorTextIcons</item>
+        <!-- subtitle text color -->
+        <item name="android:textColorSecondary">@color/colorTextIcons</item>
+        <!-- action menu item text color -->
+        <item name="actionMenuTextColor">@color/colorTextIcons</item>
+        <!-- action menu item icon color -->
+        <item name="colorControlNormal">@color/colorTextIcons</item>
     </style>
 
 </resources>
