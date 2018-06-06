@@ -9,8 +9,6 @@
     android:layout_height="@dimen/gridView_cellHeight"
     android:layout_marginLeft="@dimen/viewMargin"
     android:layout_marginStart="@dimen/viewMargin"
-    android:layout_marginRight="@dimen/viewMargin"
-    android:layout_marginEnd="@dimen/viewMargin"
     android:layout_marginBottom="@dimen/viewMargin"
     android:clickable="true"
     android:focusable="true"
