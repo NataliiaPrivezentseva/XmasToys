@@ -57,6 +57,7 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
                 intent.putExtra("toyName",mToyCollection.get(position).getmToyName());
                 intent.putExtra("toyYear",mToyCollection.get(position).getmYear());
                 intent.putExtra("toyPicture",mToyCollection.get(position).getmImageResourceId());
+                intent.putExtra("toyStory", mToyCollection.get(position).getmStory());
 
                 // start the activity
                 mContext.startActivity(intent);
@@ -74,7 +75,7 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
             super(itemView);
 
             toyNameTextView = itemView.findViewById(R.id.toy_name_text_view);
-            pictureImageView = itemView.findViewById(R.id.picture_image_view);
+            pictureImageView = itemView.findViewById(R.id.toy_picture_image_view);
             toyYearTextView = itemView.findViewById(R.id.toy_year_text_view);
             cardView = itemView.findViewById(R.id.card_view);
         }

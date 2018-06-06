@@ -27,7 +27,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/picture_image_view"
+            android:id="@+id/toy_picture_image_view"
             android:layout_width="@dimen/gridView_imageSide"
             android:layout_height="@dimen/gridView_imageSide"
             android:scaleType="centerCrop"
@@ -38,7 +38,7 @@
             android:id="@+id/toy_name_text_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/picture_image_view"
+            android:layout_below="@id/toy_picture_image_view"
             tools:text="Name of toy"
             android:textColor="@color/colorTextIcons"
             android:textSize="@dimen/bigTextSize"
@@ -48,8 +48,8 @@
             android:id="@+id/toy_year_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@id/picture_image_view"
-            android:layout_alignEnd="@id/picture_image_view"
+            android:layout_alignRight="@id/toy_picture_image_view"
+            android:layout_alignEnd="@id/toy_picture_image_view"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             tools:text="2018/2019"
             android:textColor="@color/colorTextIcons"

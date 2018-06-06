@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/background">
@@ -10,16 +11,74 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/name_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/gridView_cellWidth"
-        android:background="@color/colorPrimary"
-        android:padding="@dimen/cellText_padding"
-        android:textColor="@color/colorTextIcons"
-        android:textSize="@dimen/normalTextSize"
-        android:gravity="end|bottom"
-        tools:text="Toy name"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/gridView_cellWidth"
+                    android:background="@color/colorPrimary"
+                    android:padding="@dimen/cellText_padding"
+                    android:textColor="@color/colorTextIcons"
+                    android:textSize="@dimen/bigTextSize"
+                    android:gravity="start|top"
+                    tools:text="Toy name "/>
+
+                <TextView
+                    android:id="@+id/year_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="2018/2019"
+                    android:textColor="@color/colorPrimarySecondaryText"
+                    android:textSize="@dimen/normalTextSize"
+                    android:padding="@dimen/cellText_padding"
+                    android:layout_below="@id/name_text_view"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <ImageView
+                    android:id="@+id/picture_image_view"
+                    android:layout_width="@dimen/gridView_imageSide"
+                    android:layout_height="@dimen/gridView_imageSide"
+                    tools:srcCompat="@drawable/taxi"
+                    android:scaleType="centerCrop"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="51dp"
+                    android:layout_marginStart="51dp"
+                    android:layout_marginTop="100dp"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/story_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="За этой игрушкой пришлось ходить трижды: первые два раза киоск на ярмарке уже закрылся. А на третий раз игрушки на витрине не оказалось. Думала, что закончились... А на самом деле продавец отложила для меня последний экземпляр."
+                android:layout_margin="35dp"
+                android:padding="@dimen/cellText_padding"
+                android:textSize="@dimen/normalTextSize"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/edit_toy_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/button_margin"
+            android:visibility="visible"
+            app:elevation="5dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_edit"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
