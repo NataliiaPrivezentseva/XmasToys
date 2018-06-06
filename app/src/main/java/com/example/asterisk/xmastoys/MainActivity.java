@@ -1,15 +1,13 @@
 package com.example.asterisk.xmastoys;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
-import com.example.asterisk.xmastoys.adapter.ToyAdapter;
+import com.example.asterisk.xmastoys.adapter.ToyRecyclerAdapter;
 import com.example.asterisk.xmastoys.model.Toy;
 
 import java.util.ArrayList;
@@ -38,24 +36,12 @@ public class MainActivity extends AppCompatActivity {
         toyCollection.add(new Toy("Третья игрушка", "2016/2017",
                 "А тут должна быть другая история", R.drawable.taxi));
 
+        //todo прописать логику кнопки
         FloatingActionButton fab = findViewById(R.id.add_toy_fab);
 
-
-        GridView gridview = findViewById(R.id.grid_view);
-        gridview.setAdapter(new ToyAdapter(this, toyCollection));
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-
-/*                Intent oneToyIntent = new Intent(MainActivity.this, OneToyActivity.class);
-                oneToyIntent.putExtra("position", position);
-                oneToyIntent.putExtra("toyCollection", toyCollection);
-                startActivity(oneToyIntent);*/
-
-                Intent oneToyIntent = new Intent(v.getContext(), OneToyActivity.class);
-                oneToyIntent.putExtra("toyName", toyCollection.get(position).getmToyName());
-                startActivity(oneToyIntent);
-            }
-        });
+        RecyclerView myrv = findViewById(R.id.my_recycler_view);
+        ToyRecyclerAdapter myAdapter = new ToyRecyclerAdapter(this,toyCollection);
+        myrv.setLayoutManager(new GridLayoutManager(this,2));
+        myrv.setAdapter(myAdapter);
     }
 }
