@@ -25,12 +25,13 @@
                     android:id="@+id/name_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/gridView_cellWidth"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/background_gradient"
                     android:padding="@dimen/cellText_padding"
                     android:textColor="@color/colorTextIcons"
                     android:textSize="@dimen/bigTextSize"
+                    android:textStyle="bold"
                     android:gravity="start|top"
-                    tools:text="Toy name "/>
+                    tools:text="Toy name" />
 
                 <TextView
                     android:id="@+id/year_text_view"
@@ -44,17 +45,18 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/picture_image_view"
-                    android:layout_width="@dimen/gridView_imageSide"
-                    android:layout_height="@dimen/gridView_imageSide"
-                    tools:srcCompat="@drawable/taxi"
-                    android:scaleType="centerCrop"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    tools:src="@drawable/taxi"
+                    app:civ_border_width="5dp"
+                    app:civ_border_color="@color/colorPrimaryDark"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="51dp"
                     android:layout_marginStart="51dp"
-                    android:layout_marginTop="100dp"/>
+                    android:layout_marginTop="80dp"/>
 
             </RelativeLayout>
 
@@ -62,10 +64,12 @@
                 android:id="@+id/story_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="За этой игрушкой пришлось ходить трижды: первые два раза киоск на ярмарке уже закрылся. А на третий раз игрушки на витрине не оказалось. Думала, что закончились... А на самом деле продавец отложила для меня последний экземпляр."
-                android:layout_margin="35dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
                 android:padding="@dimen/cellText_padding"
-                android:textSize="@dimen/normalTextSize"/>
+                android:textSize="@dimen/normalTextSize"
+                tools:text="За этой игрушкой пришлось ходить трижды: первые два раза киоск на ярмарке уже закрылся. А на третий раз игрушки на витрине не оказалось. Думала, что закончились... А на самом деле продавец отложила для меня последний экземпляр." />
 
         </LinearLayout>
 
