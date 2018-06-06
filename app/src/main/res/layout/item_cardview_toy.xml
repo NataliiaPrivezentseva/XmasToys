@@ -7,14 +7,18 @@
     android:id="@+id/card_view"
     android:layout_width="@dimen/gridView_cellWidth"
     android:layout_height="@dimen/gridView_cellHeight"
-    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="@dimen/viewMargin"
+    android:layout_marginStart="@dimen/viewMargin"
+    android:layout_marginRight="@dimen/viewMargin"
+    android:layout_marginEnd="@dimen/viewMargin"
+    android:layout_marginBottom="@dimen/viewMargin"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="8dp"
     card_view:contentPadding="15dp"
     card_view:cardElevation="5dp"
-    android:clickable="true"
-    android:focusable="true"
-    card_view:cardBackgroundColor="@color/colorAccent"
-    android:foreground="?android:attr/selectableItemBackground">
+    card_view:cardBackgroundColor="@color/colorAccent">
 
     <!--todo extract dimens resources-->
 
