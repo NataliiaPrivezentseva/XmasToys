@@ -21,6 +21,11 @@
             android:name=".OneToyActivity">
         </activity>
 
+        <activity
+            android:name=".AddToyActivity"
+            android:label="@string/add_toy">
+
+        </activity>
     </application>
 
 </manifest>

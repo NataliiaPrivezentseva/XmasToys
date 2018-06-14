@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/my_add_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/AppThemeBar2"
+                app:popupTheme="@style/AppThemeBar2" />
+
+            <EditText
+                android:id="@+id/name_edit_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/viewMargin"
+                android:layout_marginLeft="@dimen/viewMargin"
+                android:layout_marginRight="@dimen/viewMargin"
+                android:layout_marginStart="@dimen/viewMargin"
+                android:layout_marginTop="@dimen/viewMargin"
+                android:hint="@string/toy_name"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/year_edit_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:hint="@string/year_year"
+                android:inputType="text" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <ImageView
+                    android:id="@+id/default_picture_image_view"
+                    android:layout_width="@dimen/gridView_imageSide"
+                    android:layout_height="@dimen/gridView_imageSide"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/toy"
+                    tools:ignore="contentDescription"/>
+
+                <ImageButton
+                    android:id="@+id/camera_image_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/default_picture_image_view"
+                    android:layout_alignEnd="@id/default_picture_image_view"
+                    android:layout_alignBottom="@id/default_picture_image_view"
+                    android:src="@drawable/ic_camera"
+                    android:background="@color/colorPrimary"
+                    android:layout_margin="10dp"
+                    tools:ignore="contentDescription" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/story_edit_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:hint="@string/toy_story"
+                android:inputType="textLongMessage" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/done_toy_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/button_margin"
+            android:visibility="visible"
+            app:elevation="5dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_done" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</android.support.constraint.ConstraintLayout>

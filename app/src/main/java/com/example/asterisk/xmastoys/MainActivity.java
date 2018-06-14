@@ -1,10 +1,12 @@
 package com.example.asterisk.xmastoys;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
         //todo прописать логику кнопки
         FloatingActionButton fab = findViewById(R.id.add_toy_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addIntent = new Intent(MainActivity.this, AddToyActivity.class);
+                // start the activity
+                startActivity(addIntent);
+            }
+        });
 
         RecyclerView myrv = findViewById(R.id.my_recycler_view);
         ToyRecyclerAdapter myAdapter = new ToyRecyclerAdapter(this, toyCollection);
