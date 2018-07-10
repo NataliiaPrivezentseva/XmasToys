@@ -59,6 +59,7 @@ public class AddToyActivity extends AppCompatActivity {
                 initialUiSetup();
 
 
+                //todo do not start an activity, if information was not change in the Cloud
                 // start the activity, which will show an updated list of toys
                 startActivity(addIntent);
             }
