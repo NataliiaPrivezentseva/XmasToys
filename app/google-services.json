@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "777863909305",
+    "firebase_url": "https://xmas-toys.firebaseio.com",
+    "project_id": "xmas-toys",
+    "storage_bucket": "xmas-toys.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777863909305:android:fa49fe38eda5d2df",
+        "android_client_info": {
+          "package_name": "com.example.asterisk.xmastoys"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777863909305-t9igr93l93sevg730jm2a8cptpu4g4p4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.asterisk.xmastoys",
+            "certificate_hash": "2d91febf2e6606798fb3d9613db58abaf46e73fb"
+          }
+        },
+        {
+          "client_id": "777863909305-pfctdbn7lqsvi27r6ttmiu8211fn16ad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQiPOUmmlJ4o6z1fvthniaAp04FR4qywU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777863909305-pfctdbn7lqsvi27r6ttmiu8211fn16ad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

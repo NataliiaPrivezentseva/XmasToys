@@ -10,6 +10,10 @@ public class Toy {
 
     private int mImageResourceId;
 
+    public Toy(){
+
+    }
+
     public Toy(String toyName, String year) {
         this.mToyName = toyName;
         this.mYear = year;
