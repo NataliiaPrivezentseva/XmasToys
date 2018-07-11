@@ -6,6 +6,6 @@
     <string name="year_year">YYYY/YYYY</string>
     <string name="toy_story">Story about this toy</string>
     <string name="sign_in_with_e_mail">Sign in with e-mail</string>
-    <string name="sign_in_with_google_account">Sign in with Google account</string>
+    <string name="sign_in_with_google_account">Sign in with Google</string>
     <string name="sigh_in_with_phone_number">Sigh in with phone number</string>
 </resources>
