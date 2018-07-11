@@ -18,6 +18,11 @@
         </activity>
 
         <activity
+            android:name=".LoginChoiceActivity"
+            android:label="@string/login_choice">
+        </activity>
+
+        <activity
             android:name=".OneToyActivity">
         </activity>
 

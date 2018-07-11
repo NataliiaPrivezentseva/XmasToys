@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //todo if user is not signed up, then show LoginChoiceActivity
+
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         if (myToolbar != null) {
             setSupportActionBar(myToolbar);
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addIntent = new Intent(MainActivity.this, AddToyActivity.class);
+                //todo delete next line with fake intent
+//                Intent addIntent = new Intent(MainActivity.this, LoginChoiceActivity.class);
                 // start the activity
                 startActivity(addIntent);
             }

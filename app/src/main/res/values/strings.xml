@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Xmas Toys</string>
     <string name="add_toy">Add toy</string>
+    <string name="login_choice">Sign in</string>
 
     <string name="toy_name">Toy name</string>
     <string name="year_year">YYYY/YYYY</string>
