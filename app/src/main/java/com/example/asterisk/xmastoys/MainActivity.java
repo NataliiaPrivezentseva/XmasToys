@@ -16,6 +16,7 @@ import android.view.View;
 import com.example.asterisk.xmastoys.adapter.ToyRecyclerAdapter;
 import com.example.asterisk.xmastoys.model.Toy;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -23,11 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    //TODO provide UI for log out
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //todo if user is not signed up, then show LoginChoiceActivity
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -44,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         if (myToolbar != null) {
             setSupportActionBar(myToolbar);
         }
+
+        // Get current user
+        FirebaseUser user = auth.getCurrentUser();
 
         //todo заменить на другой вид коллекции
         final ArrayList<Toy> toyCollection = new ArrayList<>();
