@@ -27,8 +27,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
         eMailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo change name of the class that would be opened after click on this button
-                startActivity(new Intent(LoginChoiceActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginChoiceActivity.this, EmailRegistrationActivity.class));
             }
         });
 

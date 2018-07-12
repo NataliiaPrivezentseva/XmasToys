@@ -9,4 +9,16 @@
     <string name="sign_in_with_e_mail">Sign in with e-mail</string>
     <string name="sign_in_with_google_account">Sign in with Google</string>
     <string name="sigh_in_with_phone_number">Sigh in with phone number</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="log_in_email">Already registered? Log in here</string>
+    <string name="sign_in_with_email">Sign in with e-mail</string>
+    <string name="login">Log in</string>
+    <string name="enter_email">Please, enter e-mail</string>
+    <string name="enter_password">Please, enter password</string>
+    <string name="registering_wait">Registering... Please, wait...</string>
+    <string name="successfully_registered">Successfully registered</string>
+    <string name="registration_error">Registration Error</string>
 </resources>

@@ -15,17 +15,30 @@ import android.view.View;
 
 import com.example.asterisk.xmastoys.adapter.ToyRecyclerAdapter;
 import com.example.asterisk.xmastoys.model.Toy;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         //todo if user is not signed up, then show LoginChoiceActivity
+        // Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+
+        //todo maybe finish() should be called before starting new activity?
+        if (auth.getCurrentUser() == null) {
+            startActivity(new Intent(MainActivity.this, LoginChoiceActivity.class));
+            finish();
+        }
+
+        // Now we are setting the view for logged in user
+        setContentView(R.layout.activity_main);
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         if (myToolbar != null) {
