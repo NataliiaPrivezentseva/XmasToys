@@ -20,6 +20,8 @@
     <string name="enter_password">Please, enter password</string>
     <string name="registering_wait">Registering... Please, wait...</string>
     <string name="successfully_registered">Successfully registered</string>
+    <string name="successfully_logged_in">Successfully logged in</string>
     <string name="registration_error">Registration Error</string>
+    <string name="login_error">Login Error</string>
     <string name="logging_wait">Logging in... Please, wait...</string>
 </resources>

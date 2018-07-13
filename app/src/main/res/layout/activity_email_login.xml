@@ -70,7 +70,7 @@
             android:layout_marginEnd="@dimen/viewMargin"
             android:layout_marginRight="@dimen/viewMargin"
             android:layout_marginTop="@dimen/viewMargin"
-            android:layout_below="@id/register_button"
+            android:layout_below="@id/login_button"
             android:text="@string/forgot_password"
             android:textColor="@color/colorPrimaryDark"
             android:layout_centerHorizontal="true"

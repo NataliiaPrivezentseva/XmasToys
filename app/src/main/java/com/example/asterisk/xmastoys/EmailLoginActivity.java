@@ -45,7 +45,6 @@ public class EmailLoginActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.log_email_edit_text);
         inputPassword = findViewById(R.id.log_password_edit_text);
 
-        Button logIn = findViewById(R.id.login_button);
         TextView resetPassword = findViewById(R.id.forgot_password_text);
 
         resetPassword.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +54,14 @@ public class EmailLoginActivity extends AppCompatActivity {
                         ResetPasswordActivity.class));
             }
         });
+
+        Button logIn = findViewById(R.id.login_button);
+
+        if (getIntent().getExtras() != null){
+            Bundle receivedInfo =  getIntent().getExtras();
+            inputEmail.setText(receivedInfo.getString("eMail"));
+            inputPassword.setText(receivedInfo.getString("password"));
+        }
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,13 +99,17 @@ public class EmailLoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //if the task is successfull
                         if(task.isSuccessful()){
-                            //start the profile activity
-                            finish();
-                            //TODO order of lines?
                             //TODO getApplicationContext() in intent?
+                            Toast.makeText(EmailLoginActivity.this,
+                                    R.string.successfully_logged_in,Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        } else {
+                            //display some message here
+                            Toast.makeText(EmailLoginActivity.this,
+                                    R.string.login_error,Toast.LENGTH_LONG).show();
+                            //todo send message to developer
                         }
                         progressDialog.dismiss();
                     }
