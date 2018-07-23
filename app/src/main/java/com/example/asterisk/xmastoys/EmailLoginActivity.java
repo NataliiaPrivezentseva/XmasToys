@@ -60,7 +60,9 @@ public class EmailLoginActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null){
             Bundle receivedInfo =  getIntent().getExtras();
             inputEmail.setText(receivedInfo.getString("eMail"));
-            inputPassword.setText(receivedInfo.getString("password"));
+            if (receivedInfo.getString("password") != null) {
+                inputPassword.setText(receivedInfo.getString("password"));
+            }
         }
 
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +74,8 @@ public class EmailLoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(){
-        //TODO logic for log in + log in with data from EmailRegistrationActivity
-
         String email = inputEmail.getText().toString().trim();
         String password  = inputPassword.getText().toString().trim();
-
 
         // Check if email and passwords are empty
         if(TextUtils.isEmpty(email)){
@@ -94,7 +93,6 @@ public class EmailLoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         // Log in the user
-        // TODO see again at this logic
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
