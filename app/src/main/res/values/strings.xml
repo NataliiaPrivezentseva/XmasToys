@@ -16,6 +16,7 @@
     <string name="log_in_email">Already registered? Log in here</string>
     <string name="sign_in_with_email">Sign in with e-mail</string>
     <string name="login">Log in</string>
+    <string name="logout">Log out</string>
     <string name="enter_email">Please, enter e-mail</string>
     <string name="enter_password">Please, enter password</string>
     <string name="registering_wait">Registering... Please, wait...</string>
