@@ -11,6 +11,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.asterisk.xmastoys.adapter.ToyRecyclerAdapter;
@@ -94,6 +96,32 @@ public class MainActivity extends AppCompatActivity {
         myrv.setAdapter(myAdapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.option_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout:
+                logOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void logOut(){
+        auth.signOut();
+        //closing activity
+        finish();
+        //starting login activity
+        startActivity(new Intent(MainActivity.this, LoginChoiceActivity.class));
+    }
+
     /**
      * Converting dp to pixel
      */
@@ -136,5 +164,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 }
