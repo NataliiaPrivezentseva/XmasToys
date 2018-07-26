@@ -23,7 +23,8 @@ public class EmailLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private EditText inputEmail;
-    private EditText inputPassword;
+//    private EditText inputPassword;
+    private android.support.design.widget.TextInputEditText inputPassword;
     private ProgressDialog progressDialog;
 
     @Override
@@ -43,7 +44,7 @@ public class EmailLoginActivity extends AppCompatActivity {
 
 
         inputEmail = findViewById(R.id.log_email_edit_text);
-        inputPassword = findViewById(R.id.log_password_edit_text);
+        inputPassword = findViewById(R.id.log_password);
 
         TextView resetPassword = findViewById(R.id.forgot_password_text);
 
