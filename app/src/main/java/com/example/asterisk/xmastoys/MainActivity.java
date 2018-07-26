@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
-    //TODO provide UI for log out
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
