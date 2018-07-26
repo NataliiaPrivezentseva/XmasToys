@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         //todo заменить на другой вид коллекции
         final ArrayList<Toy> toyCollection = new ArrayList<>();
-        toyCollection.add(new Toy("Такси изобилия", "2017/2018",
+        toyCollection.add(new Toy("Christmas taxi", "2017/2018",
                 "За этой игрушкой пришлось ходить трижды: первые два раза киоск на ярмарке" +
                         "уже закрылся. А на третий раз игрушки на витрине не оказалось. Думала, " +
                         "что закончились... А на самом деле продавец отложила для меня последний" +
