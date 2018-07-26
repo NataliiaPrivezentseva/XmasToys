@@ -50,25 +50,31 @@ public class EmailLoginActivity extends AppCompatActivity {
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EmailLoginActivity.this,
-                        ResetPasswordActivity.class));
+                Bundle infoToSend = new Bundle();
+                infoToSend.putString("eMail", inputEmail.getText().toString());
+
+                Intent intent = new Intent(EmailLoginActivity.this,
+                        ResetPasswordActivity.class);
+                intent.putExtras(infoToSend);
+                startActivity(intent);
             }
         });
 
         Button logIn = findViewById(R.id.login_button);
 
-        if (getIntent().getExtras() != null){
-            Bundle receivedInfo =  getIntent().getExtras();
-            inputEmail.setText(receivedInfo.getString("eMail"));
-            if (receivedInfo.getString("password") != null) {
-                inputPassword.setText(receivedInfo.getString("password"));
-            }
-        }
-
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginUser();
+            }
+        });
+
+        Button register = findViewById(R.id.register_button);
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerUser();
             }
         });
     }
@@ -107,6 +113,58 @@ public class EmailLoginActivity extends AppCompatActivity {
                             //display some message here
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.login_error,Toast.LENGTH_LONG).show();
+                            //todo send message to developer
+                        }
+                        progressDialog.dismiss();
+                    }
+                });
+    }
+
+    private void registerUser(){
+        // Get email and password from edit texts
+        String email = inputEmail.getText().toString().trim();
+        String password  = inputPassword.getText().toString().trim();
+
+        // Check if email and passwords are empty
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(this, R.string.enter_email,Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this, R.string.enter_password,Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //TODO other validations of input
+
+        // If e-mail and password are OK, display a progress dialog
+        progressDialog.setMessage(getString(R.string.registering_wait));
+        progressDialog.show();
+
+        // Create a new user
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //todo log results
+                        if(task.isSuccessful()){
+                            //display some message here
+                            Toast.makeText(EmailLoginActivity.this,
+                                    R.string.successfully_registered,Toast.LENGTH_LONG).show();
+
+                            Bundle infoToSend = new Bundle();
+                            infoToSend.putString("eMail", inputEmail.getText().toString());
+                            infoToSend.putString("password", inputPassword.getText().toString());
+
+                            Intent intent = new Intent(EmailLoginActivity.this,
+                                    EmailLoginActivity.class);
+                            intent.putExtras(infoToSend);
+                            startActivity(intent);
+                        } else {
+                            //display some message here
+                            Toast.makeText(EmailLoginActivity.this,
+                                    R.string.registration_error,Toast.LENGTH_LONG).show();
                             //todo send message to developer
                         }
                         progressDialog.dismiss();

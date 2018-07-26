@@ -28,7 +28,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginChoiceActivity.this,
-                        EmailRegistrationActivity.class));
+                        EmailLoginActivity.class));
             }
         });
 

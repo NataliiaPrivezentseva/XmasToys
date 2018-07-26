@@ -40,6 +40,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         inputEmail = findViewById(R.id.registered_email_edit_text_view);
 
+        if (getIntent().getExtras() != null){
+            Bundle receivedInfo =  getIntent().getExtras();
+            inputEmail.setText(receivedInfo.getString("eMail"));
+        }
+
         Button reset = findViewById(R.id.reset_password_button);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
