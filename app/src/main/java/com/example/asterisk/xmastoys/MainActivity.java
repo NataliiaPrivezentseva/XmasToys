@@ -83,14 +83,14 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView myrv = findViewById(R.id.my_recycler_view);
         ToyRecyclerAdapter myAdapter = new ToyRecyclerAdapter(this, toyCollection);
 
-        int amountOfColumns;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            amountOfColumns = 2;
-        } else {
-            amountOfColumns = 3;
-        }
-        myrv.setLayoutManager(new GridLayoutManager(this, amountOfColumns));
-        myrv.addItemDecoration(new GridItemSpacingDecoration(amountOfColumns, pdToPx(10), false));
+//        int amountOfColumns;
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            amountOfColumns = 1;
+//        } else {
+//            amountOfColumns = 2;
+//        }
+        myrv.setLayoutManager(new GridLayoutManager(this, 1));
+//        myrv.addItemDecoration(new GridItemSpacingDecoration(amountOfColumns, pdToPx(10), false));
         myrv.setAdapter(myAdapter);
     }
 
