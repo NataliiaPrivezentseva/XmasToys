@@ -5,10 +5,10 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
     android:id="@+id/card_view"
-    android:layout_width="@dimen/gridView_cellWidth"
-    android:layout_height="@dimen/gridView_cellHeight"
-    android:layout_marginLeft="@dimen/viewMargin"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/viewMargin"
+    android:layout_marginEnd="@dimen/viewMargin"
     android:layout_marginBottom="@dimen/viewMargin"
     android:clickable="true"
     android:focusable="true"
@@ -23,8 +23,8 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/toy_picture_image_view"
@@ -36,9 +36,10 @@
 
         <TextView
             android:id="@+id/toy_name_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/toy_picture_image_view"
+            android:layout_centerHorizontal="true"
             tools:text="Name of toy"
             android:textColor="@color/colorTextIcons"
             android:textSize="@dimen/bigTextSize"

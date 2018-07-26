@@ -37,7 +37,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="75dp"/>
 
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_toy_fab"
         android:layout_width="wrap_content"
