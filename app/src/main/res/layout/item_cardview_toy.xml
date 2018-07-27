@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:id="@+id/card_view"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/viewMargin"
     android:layout_marginEnd="@dimen/viewMargin"
@@ -20,43 +22,61 @@
 
     <!--todo extract dimens resources-->
 
-    <RelativeLayout
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/toy_picture_image_view"
-            android:layout_width="@dimen/gridView_imageSide"
-            android:layout_height="@dimen/gridView_imageSide"
-            android:scaleType="centerCrop"
-            android:layout_below="@id/toy_year_text_view"
-            tools:ignore="contentDescription" />
-
-        <TextView
-            android:id="@+id/toy_name_text_view"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toy_picture_image_view"
-            android:layout_centerHorizontal="true"
-            tools:text="Name of toy"
-            android:textColor="@color/colorTextIcons"
-            android:textSize="@dimen/bigTextSize"
-            android:gravity="center"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/toy_year_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@id/toy_picture_image_view"
-            android:layout_alignEnd="@id/toy_picture_image_view"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            tools:text="2018/2019"
-            android:textColor="@color/colorTextIcons"
-            android:textSize="@dimen/normalTextSize"
-            android:background="@color/colorAccent"/>
+            <ImageView
+                android:layout_width="@dimen/gridView_imageSide"
+                android:layout_height="@dimen/gridView_imageSide"
+                android:id="@+id/toy_picture_image_view"
+                android:scaleType="centerCrop"
+                tools:ignore="contentDescription"
+                android:layout_gravity="center"/>
 
-    </RelativeLayout>
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:src="@drawable/frame"
+                tools:ignore="contentDescription"
+                android:layout_gravity="center"/>
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/viewMargin"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/toy_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Name of toy"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="@dimen/bigTextSize" />
+
+            <TextView
+                android:id="@+id/toy_year_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toy_name_text_view"
+                android:layout_marginTop="@dimen/viewMargin"
+                tools:text="2018/2019"
+                android:textColor="@color/colorTextIcons"
+                android:textSize="@dimen/normalTextSize" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

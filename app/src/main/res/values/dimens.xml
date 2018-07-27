@@ -2,10 +2,10 @@
 <resources>
     <dimen name="gridView_cellWidth">170dp</dimen>
     <dimen name="gridView_cellHeight">270dp</dimen>
-    <dimen name="gridView_imageSide">140dp</dimen>
+    <dimen name="gridView_imageSide">100dp</dimen>
 
     <dimen name="normalTextSize">18sp</dimen>
-    <dimen name="bigTextSize">20sp</dimen>
+    <dimen name="bigTextSize">22sp</dimen>
 
     <dimen name="cellText_padding">16dp</dimen>
 
