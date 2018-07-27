@@ -17,25 +17,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/viewMargin"
+        android:layout_marginLeft="@dimen/viewMargin"
+        android:layout_marginEnd="@dimen/viewMargin"
+        android:layout_marginRight="@dimen/viewMargin"
+        android:layout_marginTop="@dimen/viewMargin">
 
         <EditText
             android:id="@+id/log_email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/viewMargin"
-            android:layout_marginLeft="@dimen/viewMargin"
-            android:layout_marginEnd="@dimen/viewMargin"
-            android:layout_marginRight="@dimen/viewMargin"
-            android:layout_marginTop="@dimen/viewMargin"
             android:inputType="textEmailAddress"
             android:hint="@string/e_mail" />
+
+        <TextView
+            android:id="@+id/error_email_text_vew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/log_email_edit_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:text="@string/email_error"
+            android:textColor="@color/colorAccent"
+            android:visibility="invisible"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/log_password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/log_email_edit_text"
+            android:layout_below="@id/error_email_text_vew"
             app:passwordToggleContentDescription="description"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorAccent"
@@ -45,14 +55,19 @@
                 android:id="@+id/log_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/viewMargin"
-                android:layout_marginLeft="@dimen/viewMargin"
-                android:layout_marginEnd="@dimen/viewMargin"
-                android:layout_marginRight="@dimen/viewMargin"
-                android:layout_marginTop="@dimen/viewMargin"
                 android:hint="@string/password"
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/error_password_text_vew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/log_password_edit_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:text="@string/password_error"
+            android:textColor="@color/colorAccent"
+            android:visibility="invisible"/>
 
         <LinearLayout
             android:id="@+id/two_buttons"
@@ -61,7 +76,8 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/log_password_edit_text">
+            android:layout_below="@id/log_password_edit_text"
+            android:layout_marginTop="@dimen/viewMargin">
 
             <Button
                 android:id="@+id/login_button"

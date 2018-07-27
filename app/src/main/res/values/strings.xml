@@ -30,4 +30,8 @@
     <string name="email_for_reset_password">We just need your registered e-mail address to send you password reset instructions</string>
     <string name="sent_instructions">Further instructions have been sent to your e-mail address.</string>
     <string name="failed_to_send_instructions">Failed to send e-mail with instructions!</string>
+    <string name="check_email">Please, check your e-mail</string>
+    <string name="password_length">Password should contain at least 6 symbols</string>
+    <string name="email_error">E-mail address is wrong</string>
+    <string name="password_error">Password should be more than 6 characters</string>
 </resources>
