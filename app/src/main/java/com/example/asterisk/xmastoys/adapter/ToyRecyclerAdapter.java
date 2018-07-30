@@ -15,13 +15,14 @@ import com.example.asterisk.xmastoys.R;
 import com.example.asterisk.xmastoys.model.Toy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.MyViewHolder>{
 
     private Context mContext;
-    private ArrayList<Toy> mToyCollection;
+    private List<Toy> mToyCollection;
 
-    public ToyRecyclerAdapter(Context context, ArrayList<Toy> toyCollection) {
+    public ToyRecyclerAdapter(Context context, List<Toy> toyCollection) {
         mContext = context;
         mToyCollection = toyCollection;
     }
