@@ -4,7 +4,7 @@
     <string name="login_choice">Sign in</string>
 
     <string name="toy_name">Toy name</string>
-    <string name="year_year">YYYY/YYYY</string>
+    <string name="year_year">Year</string>
     <string name="toy_story">Story about this toy</string>
     <string name="sign_in_with_e_mail">Sign in with e-mail</string>
     <string name="sign_in_with_google_account">Sign in with Google</string>
@@ -13,19 +13,18 @@
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="forgot_password">Forgot your password?</string>
-    <string name="log_in_email">Already registered? Log in here</string>
     <string name="sign_in_with_email">Sign in with e-mail</string>
     <string name="login">Log in</string>
     <string name="logout">Log out</string>
     <string name="enter_email">Please, enter e-mail</string>
     <string name="enter_password">Please, enter password</string>
-    <string name="registering_wait">Registering... Please, wait...</string>
-    <string name="sending_instructions_wait">Sending instructions... Please, wait...</string>
+    <string name="registering_wait">Registering… Please, wait…</string>
+    <string name="sending_instructions_wait">Sending instructions… Please, wait…</string>
     <string name="successfully_registered">Successfully registered</string>
     <string name="successfully_logged_in">Successfully logged in</string>
     <string name="registration_error">Registration Error</string>
     <string name="login_error">Login Error</string>
-    <string name="logging_wait">Logging in... Please, wait...</string>
+    <string name="logging_wait">Logging in… Please, wait…</string>
     <string name="reset_password">Reset password</string>
     <string name="email_for_reset_password">We just need your registered e-mail address to send you password reset instructions</string>
     <string name="sent_instructions">Further instructions have been sent to your e-mail address.</string>
@@ -34,4 +33,7 @@
     <string name="password_length">Password should contain at least 6 symbols</string>
     <string name="email_error">E-mail address is wrong</string>
     <string name="password_error">Password should be more than 6 characters</string>
+    <string name="toy_added">Toy has been added</string>
+    <string name="toy_not_added">Failed to add toy</string>
+    <string name="year_length">Year should contain 4 digit</string>
 </resources>

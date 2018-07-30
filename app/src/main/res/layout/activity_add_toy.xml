@@ -46,7 +46,7 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:hint="@string/year_year"
-                android:inputType="text" />
+                android:inputType= "numberDecimal" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -69,7 +69,6 @@
                     android:id="@+id/camera_image_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/default_picture_image_view"
                     android:layout_alignEnd="@id/default_picture_image_view"
                     android:layout_alignBottom="@id/default_picture_image_view"
                     android:src="@drawable/ic_camera"
