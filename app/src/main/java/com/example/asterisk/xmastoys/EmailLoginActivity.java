@@ -18,6 +18,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 
 public class EmailLoginActivity extends AppCompatActivity {
 
@@ -191,6 +195,10 @@ public class EmailLoginActivity extends AppCompatActivity {
                             //display some message here
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.successfully_registered, Toast.LENGTH_LONG).show();
+                            loginUser();
+                        } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                            Toast.makeText(EmailLoginActivity.this,
+                                    "User with this email already exist.", Toast.LENGTH_SHORT).show();
                             loginUser();
                         } else {
                             //display some message here
