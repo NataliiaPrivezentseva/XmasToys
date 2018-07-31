@@ -26,7 +26,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private FirebaseFirestore db;
     private ToyRecyclerAdapter myAdapter;
     private List<Toy> toyCollection;
 
@@ -41,57 +40,60 @@ public class MainActivity extends AppCompatActivity {
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(MainActivity.this, LoginChoiceActivity.class));
             finish();
-        }
+        } else {
 
-        // Now we are setting the view for logged in user
-        setContentView(R.layout.activity_main);
+            // Now we are setting the view for logged in user
+            setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        if (myToolbar != null) {
-            setSupportActionBar(myToolbar);
-        }
-
-        //todo USE THIS USER!
-        // Get current user
-        FirebaseUser user = auth.getCurrentUser();
-
-        toyCollection = new ArrayList<>();
-
-        FloatingActionButton fab = findViewById(R.id.add_toy_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addIntent = new Intent(MainActivity.this, AddToyActivity.class);
-                // start the activity
-                startActivity(addIntent);
+            Toolbar myToolbar = findViewById(R.id.my_toolbar);
+            if (myToolbar != null) {
+                setSupportActionBar(myToolbar);
             }
-        });
 
-        RecyclerView myrv = findViewById(R.id.my_recycler_view);
-        myAdapter = new ToyRecyclerAdapter(this, toyCollection);
+            // Get current user
+            FirebaseUser user = auth.getCurrentUser();
+            String userId = user.getUid();
 
-        myrv.setLayoutManager(new GridLayoutManager(this, 1));
-        myrv.setAdapter(myAdapter);
+            toyCollection = new ArrayList<>();
 
-        db = FirebaseFirestore.getInstance();
+            FloatingActionButton fab = findViewById(R.id.add_toy_fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent addIntent = new Intent(MainActivity.this, AddToyActivity.class);
+                    // start the activity
+                    startActivity(addIntent);
+                }
+            });
 
-        db.collection("toyCollection").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(!queryDocumentSnapshots.isEmpty()){
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for(DocumentSnapshot doc : list){
-                                Toy toy = doc.toObject(Toy.class);
-                                if (toy.getmImageResourceId() == 0){
-                                    toy.setmImageResourceId(R.drawable.toy);
+            RecyclerView myrv = findViewById(R.id.my_recycler_view);
+            myAdapter = new ToyRecyclerAdapter(this, toyCollection);
+
+            myrv.setLayoutManager(new GridLayoutManager(this, 1));
+            myrv.setAdapter(myAdapter);
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            db.collection("users").document(userId).collection("toyCollection").get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if (!queryDocumentSnapshots.isEmpty()) {
+                                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                for (DocumentSnapshot doc : list) {
+                                    Toy toy = doc.toObject(Toy.class);
+                                    if (toy != null) {
+                                        if (toy.getmImageResourceId() == 0) {
+                                            toy.setmImageResourceId(R.drawable.toy);
+                                        }
+                                        toyCollection.add(toy);
+                                    }
                                 }
-                                toyCollection.add(toy);
+                                myAdapter.notifyDataSetChanged();
                             }
-                            myAdapter.notifyDataSetChanged();
                         }
-                    }
-                });
+                    });
+        }
     }
 
     @Override

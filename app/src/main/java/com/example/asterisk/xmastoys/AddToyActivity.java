@@ -1,25 +1,27 @@
 package com.example.asterisk.xmastoys;
 
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.support.annotation.NonNull;
-        import android.support.annotation.Nullable;
-        import android.support.design.widget.FloatingActionButton;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.Toolbar;
-        import android.text.TextUtils;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.EditText;
-        import android.widget.ImageView;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-        import com.example.asterisk.xmastoys.model.Toy;
-        import com.google.android.gms.tasks.OnFailureListener;
-        import com.google.android.gms.tasks.OnSuccessListener;
-        import com.google.firebase.firestore.CollectionReference;
-        import com.google.firebase.firestore.DocumentReference;
-        import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.asterisk.xmastoys.model.Toy;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddToyActivity extends AppCompatActivity {
 
@@ -38,11 +40,23 @@ public class AddToyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_toy);
 
+        // Get Firebase auth instance
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() == null) {
+            startActivity(new Intent(AddToyActivity.this, LoginChoiceActivity.class));
+            finish();
+        }
+
         Toolbar myToolbar = findViewById(R.id.my_add_toolbar);
         if (myToolbar != null) {
             setSupportActionBar(myToolbar);
             myToolbar.setTitle(R.string.add_toy);
         }
+
+        // Get current user
+        FirebaseUser user = auth.getCurrentUser();
+        final String userId = user.getUid();
 
         db = FirebaseFirestore.getInstance();
 
@@ -64,7 +78,7 @@ public class AddToyActivity extends AppCompatActivity {
                 String toyYear = newToyYear.getText().toString().trim();
                 String toyStory = newToyStory.getText().toString().trim();
 
-                CollectionReference dbToyCollection = db.collection("toyCollection");
+                CollectionReference dbToyCollection = db.collection("users").document(userId).collection("toyCollection");
 
                 if (validateInput(toyName, toyYear)){
                     newToy = new Toy(toyName, toyYear);

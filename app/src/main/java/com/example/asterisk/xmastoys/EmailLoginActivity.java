@@ -191,15 +191,7 @@ public class EmailLoginActivity extends AppCompatActivity {
                             //display some message here
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.successfully_registered, Toast.LENGTH_LONG).show();
-
-                            Bundle infoToSend = new Bundle();
-                            infoToSend.putString("eMail", inputEmail.getText().toString());
-                            infoToSend.putString("password", inputPassword.getText().toString());
-
-                            Intent intent = new Intent(EmailLoginActivity.this,
-                                    EmailLoginActivity.class);
-                            intent.putExtras(infoToSend);
-                            startActivity(intent);
+                            loginUser();
                         } else {
                             //display some message here
                             Toast.makeText(EmailLoginActivity.this,
