@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,10 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.SignInMethodQueryResult;
 
 public class EmailLoginActivity extends AppCompatActivity {
 
@@ -155,16 +153,18 @@ public class EmailLoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            //TODO getApplicationContext() in intent?
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.successfully_logged_in, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(EmailLoginActivity.this, MainActivity.class));
                             finish();
                         } else {
                             //display some message here
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.login_error, Toast.LENGTH_LONG).show();
-                            //todo send message to developer
+                            if (task.getException() != null) {
+                                String error = task.getException().getMessage();
+                                Log.e("LOG_IN_USER", error);
+                            }
                         }
                         progressDialog.dismiss();
                     }
@@ -190,7 +190,6 @@ public class EmailLoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //todo log results
                         if (task.isSuccessful()) {
                             //display some message here
                             Toast.makeText(EmailLoginActivity.this,
@@ -204,7 +203,10 @@ public class EmailLoginActivity extends AppCompatActivity {
                             //display some message here
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.registration_error, Toast.LENGTH_LONG).show();
-                            //todo send message to developer
+                            if (task.getException() != null) {
+                                String error = task.getException().getMessage();
+                                Log.e("REGISTER_USER", error);
+                            }
                         }
                         progressDialog.dismiss();
                     }
