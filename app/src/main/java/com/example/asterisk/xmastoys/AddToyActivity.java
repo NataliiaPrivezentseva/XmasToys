@@ -28,8 +28,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 public class AddToyActivity extends AppCompatActivity {
 
@@ -39,13 +44,16 @@ public class AddToyActivity extends AppCompatActivity {
     EditText newToyName;
     EditText newToyYear;
     EditText newToyStory;
-    ImageView defaultPicture;
+    ImageView newToyImage;
     ImageButton addPhoto;
     int newImageResourceId;
+    private Bitmap bitmap;
 
     Toy newToy;
 
     private FirebaseFirestore db;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private String userId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,14 +76,14 @@ public class AddToyActivity extends AppCompatActivity {
 
         // Get current user
         FirebaseUser user = auth.getCurrentUser();
-        final String userId = user.getUid();
+        userId = user.getUid();
 
         db = FirebaseFirestore.getInstance();
 
         newToyName = findViewById(R.id.name_edit_text_view);
         newToyYear = findViewById(R.id.year_edit_text_view);
         newToyStory = findViewById(R.id.story_edit_text_view);
-        defaultPicture = findViewById(R.id.default_picture_image_view);
+        newToyImage = findViewById(R.id.default_picture_image_view);
         addPhoto = findViewById(R.id.camera_image_button);
 
         //TODO for editing an existing toy
@@ -108,7 +116,14 @@ public class AddToyActivity extends AppCompatActivity {
                         newToy.setmStory(toyStory);
                     }
 
-                    //todo think, how to add picture
+                    // Save image to storage
+                    if (bitmap != null) {
+                        saveImage(bitmap);
+                        //TODO add info about image
+                        Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
+                    }
+
+                    //todo think, how to add picture into the toy
 
                     dbToyCollection.add(newToy)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -201,24 +216,40 @@ public class AddToyActivity extends AppCompatActivity {
             if (data != null) {
                 Uri contentURI = data.getData();
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-//                    String path = saveImage(bitmap);
-//                    Toast.makeText(AddToyActivity.this, "Image saved!", Toast.LENGTH_SHORT).show();
-                    defaultPicture.setImageBitmap(bitmap);
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                    newToyImage.setImageBitmap(bitmap);
 
                 } catch (IOException e) {
                     Log.e("ADD_TOY_FROM_GALLERY", e.getMessage());
-                    Toast.makeText(AddToyActivity.this, R.string.failed_take_picture_from_gallery, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddToyActivity.this, R.string.failed_take_picture_from_gallery,
+                            Toast.LENGTH_SHORT).show();
                 }
             }
 
         } else if (requestCode == CAMERA) {
             if (data.getExtras() != null) {
-                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                defaultPicture.setImageBitmap(thumbnail);
-//            saveImage(thumbnail);
-//            Toast.makeText(AddToyActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                bitmap = (Bitmap) data.getExtras().get("data");
+                newToyImage.setImageBitmap(bitmap);
             }
         }
+    }
+
+    private void saveImage(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        newToyImage.setDrawingCacheEnabled(false);
+        byte[] data = baos.toByteArray();
+
+        String path = "toypictures/" + userId + "/" + UUID.randomUUID() + ".png";
+        StorageReference toypicturesRef = storage.getReference(path);
+
+        UploadTask uploadTask = toypicturesRef.putBytes(data);
+        uploadTask.addOnSuccessListener(AddToyActivity.this,
+                new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.e("ADD_TOY_SAVE_IMAGE", "Image was saved");
+            }
+        });
     }
 }
