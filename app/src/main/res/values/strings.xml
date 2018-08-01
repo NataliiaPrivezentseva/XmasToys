@@ -1,4 +1,10 @@
 <resources>
+    <string-array
+        name="photo_choice">
+        <item>Select photo from gallery</item>
+        <item>Capture photo from camera</item>
+    </string-array>
+
     <string name="app_name">Xmas Toys</string>
     <string name="add_toy">Add toy</string>
     <string name="login_choice">Sign in</string>
@@ -36,4 +42,6 @@
     <string name="toy_added">Toy has been added</string>
     <string name="toy_not_added">Failed to add toy</string>
     <string name="year_length">Year should contain 4 digit</string>
+    <string name="add_photo">Add photo</string>
+    <string name="failed_take_picture_from_gallery">Can\'t take picture from the gallery</string>
 </resources>
