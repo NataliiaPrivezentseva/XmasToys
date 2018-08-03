@@ -34,9 +34,9 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/toy_picture_image_view"
                 android:layout_width="@dimen/gridView_imageSide"
                 android:layout_height="@dimen/gridView_imageSide"
-                android:id="@+id/toy_picture_image_view"
                 android:scaleType="centerCrop"
                 tools:ignore="contentDescription"
                 android:layout_gravity="center"/>

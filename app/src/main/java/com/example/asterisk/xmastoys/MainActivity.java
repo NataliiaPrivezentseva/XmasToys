@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginChoiceActivity.class));
             finish();
         } else {
-
             // Now we are setting the view for logged in user
             setContentView(R.layout.activity_main);
 

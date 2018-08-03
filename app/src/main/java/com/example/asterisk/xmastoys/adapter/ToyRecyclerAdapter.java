@@ -75,8 +75,9 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
                 // passing data to the book activity
                 intent.putExtra("toyName",mToyCollection.get(position).getmToyName());
                 intent.putExtra("toyYear",mToyCollection.get(position).getmYear());
-                intent.putExtra("toyPicture",mToyCollection.get(position).getmImageResourceId());
                 intent.putExtra("toyStory", mToyCollection.get(position).getmStory());
+                intent.putExtra("toyPictureId",mToyCollection.get(position).getmImageResourceId());
+                intent.putExtra("toyPath", mToyCollection.get(position).getmPath());
 
                 // start the activity
                 mContext.startActivity(intent);
