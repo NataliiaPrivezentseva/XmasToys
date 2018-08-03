@@ -3,6 +3,7 @@ package com.example.asterisk.xmastoys;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -219,7 +220,7 @@ public class AddToyActivity extends AppCompatActivity {
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     newToyImage.setImageBitmap(bitmap);
-
+                    addPhoto.setBackgroundColor(Color.TRANSPARENT);
                 } catch (IOException e) {
                     Log.e("ADD_TOY_FROM_GALLERY", e.getMessage());
                     Toast.makeText(AddToyActivity.this, R.string.failed_take_picture_from_gallery,
@@ -231,6 +232,7 @@ public class AddToyActivity extends AppCompatActivity {
             if (data.getExtras() != null) {
                 bitmap = (Bitmap) data.getExtras().get("data");
                 newToyImage.setImageBitmap(bitmap);
+                addPhoto.setBackgroundColor(Color.TRANSPARENT);
             }
         }
     }
