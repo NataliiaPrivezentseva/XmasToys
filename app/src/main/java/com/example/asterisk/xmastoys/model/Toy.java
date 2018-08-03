@@ -10,6 +10,8 @@ public class Toy {
 
     private int mImageResourceId;
 
+    private String mPath;
+
     public Toy(){
 
     }
@@ -55,5 +57,13 @@ public class Toy {
 
     public void setmImageResourceId(int mImageResourceId) {
         this.mImageResourceId = mImageResourceId;
+    }
+
+    public String getmPath() {
+        return mPath;
+    }
+
+    public void setmPath(String mPath) {
+        this.mPath = mPath;
     }
 }

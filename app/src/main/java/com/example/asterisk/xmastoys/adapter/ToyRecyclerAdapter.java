@@ -4,23 +4,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.asterisk.xmastoys.GlideApp;
 import com.example.asterisk.xmastoys.OneToyActivity;
 import com.example.asterisk.xmastoys.R;
 import com.example.asterisk.xmastoys.model.Toy;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.MyViewHolder>{
 
     private Context mContext;
     private List<Toy> mToyCollection;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public ToyRecyclerAdapter(Context context, List<Toy> toyCollection) {
         mContext = context;
@@ -46,7 +51,20 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
 
         holder.toyNameTextView.setText(mToyCollection.get(position).getmToyName());
         holder.toyYearTextView.setText(mToyCollection.get(position).getmYear());
-        holder.pictureImageView.setImageResource(mToyCollection.get(position).getmImageResourceId());
+
+        int imageResId = mToyCollection.get(position).getmImageResourceId();
+        if (imageResId != 0) {
+            holder.pictureImageView.setImageResource(imageResId);
+        } else {
+            String path = mToyCollection.get(position).getmPath();
+            if(!TextUtils.isEmpty(path)) {
+                StorageReference toypicturesRef = storage.getReference(path);
+                Log.i("GLIDE", toypicturesRef.toString());
+                GlideApp.with(mContext)
+                        .load(toypicturesRef)
+                        .into(holder.pictureImageView);
+            }
+        }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,5 +99,4 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
             cardView = itemView.findViewById(R.id.card_view);
         }
     }
-
 }

@@ -46,8 +46,8 @@ public class AddToyActivity extends AppCompatActivity {
     EditText newToyStory;
     ImageView newToyImage;
     ImageButton addPhoto;
-    int newImageResourceId;
     private Bitmap bitmap;
+    private String path;
 
     Toy newToy;
 
@@ -116,16 +116,15 @@ public class AddToyActivity extends AppCompatActivity {
                         newToy.setmStory(toyStory);
                     }
 
-                    // Save image to storage
+                    // Save image to storage, if user has changed it, or show a default image
                     if (bitmap != null) {
                         saveImage(bitmap);
                         //TODO add info about image
                         Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
+                        newToy.setmPath(path);
                     } else {
                         newToy.setmImageResourceId(R.drawable.toy);
                     }
-
-                    //todo think, how to add picture into the toy
 
                     dbToyCollection.add(newToy)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -242,15 +241,15 @@ public class AddToyActivity extends AppCompatActivity {
         newToyImage.setDrawingCacheEnabled(false);
         byte[] data = baos.toByteArray();
 
-        String path = "toypictures/" + userId + "/" + UUID.randomUUID() + ".png";
+        path = "toypictures/" + userId + "/" + UUID.randomUUID() + ".png";
         StorageReference toypicturesRef = storage.getReference(path);
 
-        UploadTask uploadTask = toypicturesRef.putBytes(data);
+        final UploadTask uploadTask = toypicturesRef.putBytes(data);
         uploadTask.addOnSuccessListener(AddToyActivity.this,
                 new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.e("ADD_TOY_SAVE_IMAGE", "Image was saved");
+                Log.e("ADD_TOY_SAVE_IMAGE", "Image was saved" + " " + path);
             }
         });
     }
