@@ -31,39 +31,39 @@ public class Toy {
         return mToyName;
     }
 
-    public void setmToyName(String mToyName) {
-        this.mToyName = mToyName;
+    public void setmToyName(String toyName) {
+        this.mToyName = toyName;
     }
 
     public String getmYear() {
         return mYear;
     }
 
-    public void setmYear(String mYear) {
-        this.mYear = mYear;
+    public void setmYear(String year) {
+        this.mYear = year;
     }
 
     public String getmStory() {
         return mStory;
     }
 
-    public void setmStory(String mStory) {
-        this.mStory = mStory;
+    public void setmStory(String story) {
+        this.mStory = story;
     }
 
     public int getmImageResourceId() {
         return mImageResourceId;
     }
 
-    public void setmImageResourceId(int mImageResourceId) {
-        this.mImageResourceId = mImageResourceId;
+    public void setmImageResourceId(int imageResourceId) {
+        this.mImageResourceId = imageResourceId;
     }
 
     public String getmPath() {
         return mPath;
     }
 
-    public void setmPath(String mPath) {
-        this.mPath = mPath;
+    public void setmPath(String path) {
+        this.mPath = path;
     }
 }
