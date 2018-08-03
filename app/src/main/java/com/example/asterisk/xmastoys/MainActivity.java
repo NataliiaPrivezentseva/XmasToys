@@ -83,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
                                 for (DocumentSnapshot doc : list) {
                                     Toy toy = doc.toObject(Toy.class);
                                     if (toy != null) {
-                                        if (toy.getmImageResourceId() == 0) {
-                                            toy.setmImageResourceId(R.drawable.toy);
-                                        }
                                         toyCollection.add(toy);
                                     }
                                 }

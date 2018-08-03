@@ -121,6 +121,8 @@ public class AddToyActivity extends AppCompatActivity {
                         saveImage(bitmap);
                         //TODO add info about image
                         Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
+                    } else {
+                        newToy.setmImageResourceId(R.drawable.toy);
                     }
 
                     //todo think, how to add picture into the toy
