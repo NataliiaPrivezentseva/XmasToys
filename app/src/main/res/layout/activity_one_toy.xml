@@ -42,7 +42,6 @@
                     android:textSize="@dimen/normalTextSize"
                     android:padding="@dimen/cellText_padding"
                     android:layout_below="@id/name_text_view"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -52,9 +51,7 @@
                     tools:src="@drawable/toy"
                     app:civ_border_width="5dp"
                     app:civ_border_color="@color/colorPrimaryDark"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginLeft="51dp"
                     android:layout_marginStart="51dp"
                     android:layout_marginTop="80dp"/>
 
@@ -65,7 +62,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
-                android:layout_marginLeft="35dp"
                 android:layout_marginStart="35dp"
                 android:padding="@dimen/cellText_padding"
                 android:textSize="@dimen/normalTextSize"
