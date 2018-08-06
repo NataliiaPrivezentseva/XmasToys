@@ -61,6 +61,7 @@
                     android:id="@+id/default_picture_image_view"
                     android:layout_width="@dimen/gridView_imageSide"
                     android:layout_height="@dimen/gridView_imageSide"
+                    android:scaleType="centerCrop"
                     android:layout_centerVertical="true"
                     android:src="@drawable/toy"
                     tools:ignore="contentDescription"/>
