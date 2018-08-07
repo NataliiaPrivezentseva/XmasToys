@@ -69,19 +69,8 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(mContext,OneToyActivity.class);
-
-                // todo need to change BOOK in comment
-                // passing data to the book activity
-                intent.putExtra("toyName",mToyCollection.get(position).getmToyName());
-                intent.putExtra("toyYear",mToyCollection.get(position).getmYear());
-                intent.putExtra("toyStory", mToyCollection.get(position).getmStory());
-                intent.putExtra("toyPictureId",mToyCollection.get(position).getmImageResourceId());
-                intent.putExtra("toyPath", mToyCollection.get(position).getmPath());
-                intent.putExtra("documentID", mToyCollection.get(position).getmDocumentId());
-
-                // start the activity
+                intent.putExtra("toy", mToyCollection.get(position));
                 mContext.startActivity(intent);
             }
         });

@@ -51,6 +51,7 @@ public class AddToyActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private String path;
     Toy newToy;
+    Toy currentToy;
 
     private FirebaseFirestore db;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -87,24 +88,28 @@ public class AddToyActivity extends AppCompatActivity {
         newToyImage = findViewById(R.id.default_picture_image_view);
         addPhoto = findViewById(R.id.camera_image_button);
 
-        //TODO for editing an existing toy
+        // If there is information about toy, then we need to show an existing toy
+        // that is ready for editing
         if (getIntent().getExtras() != null) {
-            //todo how to find this toy in collection? - ссылку на игрушку в базе данных
+            //TODO why title did not change?
             if (myToolbar != null) {
                 myToolbar.setTitle(R.string.edit_toy);
             }
 
-            newToyName.setText(getIntent().getExtras().getString("toyName"));
-            newToyYear.setText(getIntent().getExtras().getString("toyYear"));
-            newToyStory.setText(getIntent().getExtras().getString("toyStory"));
+            currentToy = (Toy) getIntent().getExtras().get("toy");
+            assert currentToy != null;
 
-            int toyPictureId = (int) getIntent().getExtras().get("toyPictureId");
+            newToyName.setText(currentToy.getmToyName());
+            newToyYear.setText(currentToy.getmYear());
+            newToyStory.setText(currentToy.getmStory());
+
+            int toyPictureId = currentToy.getmImageResourceId();
             if (toyPictureId != 0) {
                 newToyImage.setImageResource(toyPictureId);
             } else {
-                String toyPicturePath = (String) getIntent().getExtras().get("toyPath");
-                if (!TextUtils.isEmpty(toyPicturePath)) {
-                    StorageReference toypicturesRef = storage.getReference(toyPicturePath);
+                path = currentToy.getmPath();
+                if (!TextUtils.isEmpty(path)) {
+                    StorageReference toypicturesRef = storage.getReference(path);
                     Log.i("GLIDE", toypicturesRef.toString());
                     GlideApp.with(this)
                             .load(toypicturesRef)
@@ -120,7 +125,6 @@ public class AddToyActivity extends AppCompatActivity {
                 showPictureDialog();
             }
         });
-
 
         FloatingActionButton fabAddToy = findViewById(R.id.done_toy_fab);
         fabAddToy.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +146,7 @@ public class AddToyActivity extends AppCompatActivity {
                     // Save image to storage, if user has changed it, or show a default image
                     if (bitmap != null) {
                         saveImage(bitmap);
-                        //TODO add info about image
+                        //TODO add info about image?
                         Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
                         newToy.setmPath(path);
                     } else {
@@ -150,8 +154,8 @@ public class AddToyActivity extends AppCompatActivity {
                     }
 
                     if (getIntent().getExtras() != null) {
-                        //TODO update toy in DB
-                        String documentID = getIntent().getExtras().getString("documentID");
+                        //TODO update toy in DB (now only name will be updated)
+                        String documentID = currentToy.getmDocumentId();
                         DocumentReference dbUpdatedToy = dbToyCollection.document(documentID);
                         dbUpdatedToy.update("mToyName", toyName).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -166,11 +170,11 @@ public class AddToyActivity extends AppCompatActivity {
                                 Toast.makeText(AddToyActivity.this, R.string.toy_not_updated, Toast.LENGTH_LONG).show();
                             }
                         });
-
                     } else {
-//                        DocumentReference dbNewToy = dbToyCollection.document();
-//                        String documentID = dbNewToy.getId();
-//                        newToy.setmDocumentId(documentID);
+                        //TODO set documentID for newToy
+                        DocumentReference dbNewToy = dbToyCollection.document();
+                        String documentID = dbNewToy.getId();
+                        newToy.setmDocumentId(documentID);
                         dbToyCollection.add(newToy)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override

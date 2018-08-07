@@ -1,8 +1,15 @@
 package com.example.asterisk.xmastoys.model;
 
-public class Toy {
+import android.support.annotation.NonNull;
 
-    private String mToyName;
+import com.google.firebase.firestore.Exclude;
+
+import java.io.Serializable;
+
+public class Toy implements Serializable{
+
+    @NonNull
+    private String mToyName = "Toy";
 
     private String mYear;
 
@@ -12,13 +19,14 @@ public class Toy {
 
     private String mPath;
 
+    @Exclude
     private String mDocumentId;
 
     public Toy(){
 
     }
 
-    public Toy(String toyName, String year) {
+    public Toy(@NonNull String toyName, String year) {
         this.mToyName = toyName;
         this.mYear = year;
     }
@@ -29,11 +37,12 @@ public class Toy {
         this.mImageResourceId = imageResourceId;
     }
 
+    @NonNull
     public String getmToyName() {
         return mToyName;
     }
 
-    public void setmToyName(String toyName) {
+    public void setmToyName(@NonNull String toyName) {
         this.mToyName = toyName;
     }
 
