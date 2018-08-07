@@ -12,6 +12,8 @@ public class Toy {
 
     private String mPath;
 
+    private String mDocumentId;
+
     public Toy(){
 
     }
@@ -65,5 +67,13 @@ public class Toy {
 
     public void setmPath(String path) {
         this.mPath = path;
+    }
+
+    public String getmDocumentId() {
+        return mDocumentId;
+    }
+
+    public void setmDocumentId(String DocumentId) {
+        this.mDocumentId = DocumentId;
     }
 }

@@ -47,9 +47,9 @@ public class AddToyActivity extends AppCompatActivity {
     EditText newToyStory;
     ImageView newToyImage;
     ImageButton addPhoto;
+
     private Bitmap bitmap;
     private String path;
-
     Toy newToy;
 
     private FirebaseFirestore db;
@@ -89,7 +89,29 @@ public class AddToyActivity extends AppCompatActivity {
 
         //TODO for editing an existing toy
         if (getIntent().getExtras() != null) {
-            //todo how to find this toy in collection?
+            //todo how to find this toy in collection? - ссылку на игрушку в базе данных
+            if (myToolbar != null) {
+                myToolbar.setTitle(R.string.edit_toy);
+            }
+
+            newToyName.setText(getIntent().getExtras().getString("toyName"));
+            newToyYear.setText(getIntent().getExtras().getString("toyYear"));
+            newToyStory.setText(getIntent().getExtras().getString("toyStory"));
+
+            int toyPictureId = (int) getIntent().getExtras().get("toyPictureId");
+            if (toyPictureId != 0) {
+                newToyImage.setImageResource(toyPictureId);
+            } else {
+                String toyPicturePath = (String) getIntent().getExtras().get("toyPath");
+                if (!TextUtils.isEmpty(toyPicturePath)) {
+                    StorageReference toypicturesRef = storage.getReference(toyPicturePath);
+                    Log.i("GLIDE", toypicturesRef.toString());
+                    GlideApp.with(this)
+                            .load(toypicturesRef)
+                            .into(newToyImage);
+                }
+                addPhoto.setBackgroundColor(Color.TRANSPARENT);
+            }
         }
 
         addPhoto.setOnClickListener(new View.OnClickListener() {
@@ -127,21 +149,44 @@ public class AddToyActivity extends AppCompatActivity {
                         newToy.setmImageResourceId(R.drawable.toy);
                     }
 
-                    dbToyCollection.add(newToy)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(AddToyActivity.this, R.string.toy_added, Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(AddToyActivity.this, MainActivity.class));
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.e("ADD_TOY", e.getMessage());
-                                    Toast.makeText(AddToyActivity.this, R.string.toy_not_added, Toast.LENGTH_LONG).show();
-                                }
-                            });
+                    if (getIntent().getExtras() != null) {
+                        //TODO update toy in DB
+                        String documentID = getIntent().getExtras().getString("documentID");
+                        DocumentReference dbUpdatedToy = dbToyCollection.document(documentID);
+                        dbUpdatedToy.update("mToyName", toyName).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.i("UPDATE_TOY", "DocumentSnapshot successfully updated!");
+                                startActivity(new Intent(AddToyActivity.this, MainActivity.class));
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e("UPDATE_TOY", "Error updating document: " + e.getMessage());
+                                Toast.makeText(AddToyActivity.this, R.string.toy_not_updated, Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    } else {
+//                        DocumentReference dbNewToy = dbToyCollection.document();
+//                        String documentID = dbNewToy.getId();
+//                        newToy.setmDocumentId(documentID);
+                        dbToyCollection.add(newToy)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Toast.makeText(AddToyActivity.this, R.string.toy_added, Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(AddToyActivity.this, MainActivity.class));
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("ADD_TOY", e.getMessage());
+                                        Toast.makeText(AddToyActivity.this, R.string.toy_not_added, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
                 }
             }
         });
@@ -203,8 +248,8 @@ public class AddToyActivity extends AppCompatActivity {
     }
 
     private void takePhotoFromCamera() {
-            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, CAMERA);
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA);
     }
 
     @Override
@@ -237,7 +282,7 @@ public class AddToyActivity extends AppCompatActivity {
         }
     }
 
-    private void saveImage(Bitmap bitmap){
+    private void saveImage(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         newToyImage.setDrawingCacheEnabled(false);
@@ -249,10 +294,10 @@ public class AddToyActivity extends AppCompatActivity {
         final UploadTask uploadTask = toypicturesRef.putBytes(data);
         uploadTask.addOnSuccessListener(AddToyActivity.this,
                 new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.e("ADD_TOY_SAVE_IMAGE", "Image was saved" + " " + path);
-            }
-        });
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.e("ADD_TOY_SAVE_IMAGE", "Image was saved" + " " + path);
+                    }
+                });
     }
 }

@@ -41,7 +41,9 @@
     <string name="password_error">Password should be more than 6 characters</string>
     <string name="toy_added">Toy has been added</string>
     <string name="toy_not_added">Failed to add toy</string>
+    <string name="toy_not_updated">Failed to update toy</string>
     <string name="year_length">Year should contain 4 digit</string>
     <string name="add_photo">Add photo</string>
     <string name="failed_take_picture_from_gallery">Can\'t take picture from the gallery</string>
+    <string name="edit_toy">Edit toy</string>
 </resources>
