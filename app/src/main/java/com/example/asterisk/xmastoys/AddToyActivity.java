@@ -22,8 +22,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.asterisk.xmastoys.model.Toy;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -35,6 +38,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class AddToyActivity extends AppCompatActivity {
@@ -42,20 +47,21 @@ public class AddToyActivity extends AppCompatActivity {
     static final int GALLERY = 0;
     static final int CAMERA = 1;
 
-    EditText newToyName;
-    EditText newToyYear;
-    EditText newToyStory;
-    ImageView newToyImage;
-    ImageButton addPhoto;
+    private EditText newToyName;
+    private EditText newToyYear;
+    private EditText newToyStory;
+    private ImageView newToyImage;
+    private ImageButton addPhoto;
 
     private Bitmap bitmap;
     private String path;
-    Toy newToy;
-    Toy currentToy;
+    private Toy newToy;
+    private Toy currentToy;
+    private String userId;
 
     private FirebaseFirestore db;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private String userId;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,8 +78,13 @@ public class AddToyActivity extends AppCompatActivity {
 
         Toolbar myToolbar = findViewById(R.id.my_add_toolbar);
         if (myToolbar != null) {
-            setSupportActionBar(myToolbar);
-            myToolbar.setTitle(R.string.add_toy);
+            // If there is an information about toy, then we need to show Edit toy title
+            if (getIntent().getExtras() != null) {
+                myToolbar.setTitle(R.string.edit_toy);
+            // If there is not such an information, then we need to show Add toy title
+            } else {
+                myToolbar.setTitle(R.string.add_toy);
+            }
         }
 
         // Get current user
@@ -88,14 +99,8 @@ public class AddToyActivity extends AppCompatActivity {
         newToyImage = findViewById(R.id.default_picture_image_view);
         addPhoto = findViewById(R.id.camera_image_button);
 
-        // If there is information about toy, then we need to show an existing toy
-        // that is ready for editing
+        // If user wants to edit toy, then show the info about toy that is ready fir editing
         if (getIntent().getExtras() != null) {
-            //TODO why title did not change?
-            if (myToolbar != null) {
-                myToolbar.setTitle(R.string.edit_toy);
-            }
-
             currentToy = (Toy) getIntent().getExtras().get("toy");
             assert currentToy != null;
 
@@ -134,7 +139,7 @@ public class AddToyActivity extends AppCompatActivity {
                 String toyYear = newToyYear.getText().toString().trim();
                 String toyStory = newToyStory.getText().toString().trim();
 
-                CollectionReference dbToyCollection = db.collection("users").document(userId).collection("toyCollection");
+                final CollectionReference dbToyCollection = db.collection("users").document(userId).collection("toyCollection");
 
                 if (validateInput(toyName, toyYear)) {
                     newToy = new Toy(toyName, toyYear);
@@ -143,21 +148,27 @@ public class AddToyActivity extends AppCompatActivity {
                         newToy.setmStory(toyStory);
                     }
 
-                    // Save image to storage, if user has changed it, or show a default image
-                    if (bitmap != null) {
-                        saveImage(bitmap);
-                        //TODO add info about image?
-                        Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
-                        newToy.setmPath(path);
-                    } else {
-                        newToy.setmImageResourceId(R.drawable.toy);
-                    }
-
+                    // Update existing toy
                     if (getIntent().getExtras() != null) {
-                        //TODO update toy in DB (now only name will be updated)
+                        //TODO update toy in DB (need to update picture)
                         String documentID = currentToy.getmDocumentId();
                         DocumentReference dbUpdatedToy = dbToyCollection.document(documentID);
-                        dbUpdatedToy.update("mToyName", toyName).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                        if (bitmap != null){
+                            if (currentToy.getmPath() != null){
+                                deleteImage(currentToy.getmPath());
+                            }
+                            saveImage(bitmap);
+                            Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
+                            currentToy.setmPath(path);
+                            currentToy.setmImageResourceId(0);
+                        }
+
+                        dbUpdatedToy.update("mToyName", toyName, "mYear", toyYear,
+                                "mStory", toyStory,
+                                "mPath", currentToy.getmPath(),
+                                "mImageResourceId", currentToy.getmImageResourceId())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.i("UPDATE_TOY", "DocumentSnapshot successfully updated!");
@@ -170,26 +181,36 @@ public class AddToyActivity extends AppCompatActivity {
                                 Toast.makeText(AddToyActivity.this, R.string.toy_not_updated, Toast.LENGTH_LONG).show();
                             }
                         });
+                    // Add new toy
                     } else {
-                        //TODO set documentID for newToy
-                        DocumentReference dbNewToy = dbToyCollection.document();
-                        String documentID = dbNewToy.getId();
-                        newToy.setmDocumentId(documentID);
-                        dbToyCollection.add(newToy)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Toast.makeText(AddToyActivity.this, R.string.toy_added, Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(AddToyActivity.this, MainActivity.class));
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e("ADD_TOY", e.getMessage());
-                                        Toast.makeText(AddToyActivity.this, R.string.toy_not_added, Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                        // Create documentId
+                        String documentId = newToy.getmToyName() + newToy.getmYear();
+                        newToy.setmDocumentId(documentId);
+
+                        // Save image to storage, if user has changed it, or show a default image
+                        if (bitmap != null) {
+                            saveImage(bitmap);
+                            Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
+                            newToy.setmPath(path);
+                        } else {
+                            newToy.setmImageResourceId(R.drawable.toy);
+                        }
+
+                        // Add toy with documentId into DB
+                        dbToyCollection.document(documentId).set(newToy).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    // Task completed successfully
+                                    Toast.makeText(AddToyActivity.this, R.string.toy_added, Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(AddToyActivity.this, MainActivity.class));
+                                } else {
+                                    // Task failed with an exception
+                                    Log.e("ADD_TOY", R.string.toy_not_added + ": " + task.getException());
+                                    Toast.makeText(AddToyActivity.this, R.string.toy_not_added, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
                     }
                 }
             }
@@ -303,5 +324,22 @@ public class AddToyActivity extends AppCompatActivity {
                         Log.e("ADD_TOY_SAVE_IMAGE", "Image was saved" + " " + path);
                     }
                 });
+    }
+
+    private void deleteImage(String path){
+        StorageReference toypicturesRef = storage.getReference();
+        StorageReference toyToDelete = toypicturesRef.child(path);
+
+        toyToDelete.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                //TODO LOG File deleted successfully
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                //TODO LOG Uh-oh, an error occurred!
+            }
+        });
     }
 }
