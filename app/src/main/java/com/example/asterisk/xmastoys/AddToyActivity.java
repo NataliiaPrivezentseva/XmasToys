@@ -26,7 +26,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -38,8 +37,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class AddToyActivity extends AppCompatActivity {
@@ -150,7 +147,6 @@ public class AddToyActivity extends AppCompatActivity {
 
                     // Update existing toy
                     if (getIntent().getExtras() != null) {
-                        //TODO update toy in DB (need to update picture)
                         String documentID = currentToy.getmDocumentId();
                         DocumentReference dbUpdatedToy = dbToyCollection.document(documentID);
 
@@ -181,16 +177,17 @@ public class AddToyActivity extends AppCompatActivity {
                                 Toast.makeText(AddToyActivity.this, R.string.toy_not_updated, Toast.LENGTH_LONG).show();
                             }
                         });
+
                     // Add new toy
                     } else {
                         // Create documentId
-                        String documentId = newToy.getmToyName() + newToy.getmYear();
+                        String documentId = UUID.randomUUID().toString();
                         newToy.setmDocumentId(documentId);
 
                         // Save image to storage, if user has changed it, or show a default image
                         if (bitmap != null) {
                             saveImage(bitmap);
-                            Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
+                            Log.i("ADD_TOY_SAVE_STORAGE", getString(R.string.image_added));
                             newToy.setmPath(path);
                         } else {
                             newToy.setmImageResourceId(R.drawable.toy);
@@ -321,7 +318,7 @@ public class AddToyActivity extends AppCompatActivity {
                 new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Log.e("ADD_TOY_SAVE_IMAGE", "Image was saved" + " " + path);
+                        Log.i("ADD_TOY_SAVE_IMAGE", getString(R.string.image_saved) + " " + path);
                     }
                 });
     }
@@ -333,12 +330,12 @@ public class AddToyActivity extends AppCompatActivity {
         toyToDelete.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                //TODO LOG File deleted successfully
+                Log.i("ADD_TOY_DELETE_IMAGE", getString(R.string.image_deleted));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                //TODO LOG Uh-oh, an error occurred!
+                Log.e("ADD_TOY_DELETE_IMAGE", getString(R.string.image_not_deleted) + ": " + exception.getMessage());
             }
         });
     }

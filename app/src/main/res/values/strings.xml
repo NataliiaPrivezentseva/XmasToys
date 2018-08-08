@@ -46,4 +46,8 @@
     <string name="add_photo">Add photo</string>
     <string name="failed_take_picture_from_gallery">Can\'t take picture from the gallery</string>
     <string name="edit_toy">Edit toy</string>
+    <string name="image_deleted">Image was deleted</string>
+    <string name="image_saved">Image was saved</string>
+    <string name="image_not_deleted">Image was not deleted</string>
+    <string name="image_added">Toy image had been added to Firestore Storage</string>
 </resources>
