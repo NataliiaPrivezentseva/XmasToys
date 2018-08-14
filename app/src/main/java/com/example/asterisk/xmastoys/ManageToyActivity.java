@@ -180,18 +180,19 @@ public class ManageToyActivity extends AppCompatActivity {
                         dbMessage = R.string.toy_updated;
                         dbErrorMessage = R.string.toy_not_updated;
                     }
-                    
+
                     // Writing newToy into DB
                     dbToyCollection.document(newToy.getmDocumentId()).set(newToy).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 // Task completed successfully
+                                Log.i("WRITE_TO_DB", dbMessage + ": " + task.getException());
                                 Toast.makeText(ManageToyActivity.this, dbMessage, Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
                             } else {
                                 // Task failed with an exception
-                                Log.e("ADD_TOY", R.string.toy_not_added + ": " + task.getException());
+                                Log.e("WRITE_TO_DB", dbErrorMessage + ": " + task.getException());
                                 Toast.makeText(ManageToyActivity.this, dbErrorMessage, Toast.LENGTH_LONG).show();
                             }
                         }
