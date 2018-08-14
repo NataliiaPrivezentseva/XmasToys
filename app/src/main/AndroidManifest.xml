@@ -43,7 +43,7 @@
         </activity>
 
         <activity
-            android:name=".AddToyActivity"
+            android:name=".ManageToyActivity"
             android:label="@string/add_toy">
         </activity>
 

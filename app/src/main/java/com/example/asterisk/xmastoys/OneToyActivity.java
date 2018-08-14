@@ -57,7 +57,7 @@ public class OneToyActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent editIntent = new Intent(OneToyActivity.this, AddToyActivity.class);
+                    Intent editIntent = new Intent(OneToyActivity.this, ManageToyActivity.class);
                     editIntent.putExtra("toy", currentToy);
                     startActivity(editIntent);
                 }

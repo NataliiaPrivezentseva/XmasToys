@@ -39,7 +39,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-public class AddToyActivity extends AppCompatActivity {
+public class ManageToyActivity extends AppCompatActivity {
 
     static final int GALLERY = 0;
     static final int CAMERA = 1;
@@ -63,13 +63,13 @@ public class AddToyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_toy);
+        setContentView(R.layout.activity_manage_toy);
 
         // Get Firebase auth instance
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() == null) {
-            startActivity(new Intent(AddToyActivity.this, LoginChoiceActivity.class));
+            startActivity(new Intent(ManageToyActivity.this, LoginChoiceActivity.class));
             finish();
         }
 
@@ -96,7 +96,7 @@ public class AddToyActivity extends AppCompatActivity {
         newToyImage = findViewById(R.id.default_picture_image_view);
         addPhoto = findViewById(R.id.camera_image_button);
 
-        // If user wants to edit toy, then show the info about toy that is ready fir editing
+        // If user wants to edit toy, then show the info about toy that is ready for editing
         if (getIntent().getExtras() != null) {
             currentToy = (Toy) getIntent().getExtras().get("toy");
             assert currentToy != null;
@@ -168,13 +168,13 @@ public class AddToyActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.i("UPDATE_TOY", "DocumentSnapshot successfully updated!");
-                                startActivity(new Intent(AddToyActivity.this, MainActivity.class));
+                                startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.e("UPDATE_TOY", "Error updating document: " + e.getMessage());
-                                Toast.makeText(AddToyActivity.this, R.string.toy_not_updated, Toast.LENGTH_LONG).show();
+                                Toast.makeText(ManageToyActivity.this, R.string.toy_not_updated, Toast.LENGTH_LONG).show();
                             }
                         });
 
@@ -199,12 +199,12 @@ public class AddToyActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     // Task completed successfully
-                                    Toast.makeText(AddToyActivity.this, R.string.toy_added, Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(AddToyActivity.this, MainActivity.class));
+                                    Toast.makeText(ManageToyActivity.this, R.string.toy_added, Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
                                 } else {
                                     // Task failed with an exception
                                     Log.e("ADD_TOY", R.string.toy_not_added + ": " + task.getException());
-                                    Toast.makeText(AddToyActivity.this, R.string.toy_not_added, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ManageToyActivity.this, R.string.toy_not_added, Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -217,14 +217,14 @@ public class AddToyActivity extends AppCompatActivity {
     private boolean validateInput(String toyName, String toyYear) {
         // Check if name of the toy is empty
         if (TextUtils.isEmpty(toyName)) {
-            Toast.makeText(AddToyActivity.this, "You should provide the name of the toy!",
+            Toast.makeText(ManageToyActivity.this, "You should provide the name of the toy!",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Check if year is empty
         if (TextUtils.isEmpty(toyYear)) {
-            Toast.makeText(AddToyActivity.this, "You should provide the year for the toy!",
+            Toast.makeText(ManageToyActivity.this, "You should provide the year for the toy!",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -237,7 +237,7 @@ public class AddToyActivity extends AppCompatActivity {
 
         // Check if year length is not a digit
         if (toyYear.matches("\\D") || toyYear.contains(".")) {
-            Toast.makeText(AddToyActivity.this, "Year should contain only numbers",
+            Toast.makeText(ManageToyActivity.this, "Year should contain only numbers",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -290,7 +290,7 @@ public class AddToyActivity extends AppCompatActivity {
                     addPhoto.setBackgroundColor(Color.TRANSPARENT);
                 } catch (IOException e) {
                     Log.e("ADD_TOY_FROM_GALLERY", e.getMessage());
-                    Toast.makeText(AddToyActivity.this, R.string.failed_take_picture_from_gallery,
+                    Toast.makeText(ManageToyActivity.this, R.string.failed_take_picture_from_gallery,
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -314,7 +314,7 @@ public class AddToyActivity extends AppCompatActivity {
         StorageReference toypicturesRef = storage.getReference(path);
 
         final UploadTask uploadTask = toypicturesRef.putBytes(data);
-        uploadTask.addOnSuccessListener(AddToyActivity.this,
+        uploadTask.addOnSuccessListener(ManageToyActivity.this,
                 new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
