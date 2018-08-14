@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class ManageToyActivity extends AppCompatActivity {
-
     static final int GALLERY = 0;
     static final int CAMERA = 1;
 
@@ -52,13 +51,14 @@ public class ManageToyActivity extends AppCompatActivity {
 
     private Bitmap bitmap;
     private String path;
-    private Toy newToy;
-    private Toy currentToy;
+    private Toy newToy = new Toy();
     private String userId;
+    private int dbMessage;
+    private int dbErrorMessage;
 
-    private FirebaseFirestore db;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-
+    private CollectionReference dbToyCollection;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,49 +67,51 @@ public class ManageToyActivity extends AppCompatActivity {
 
         // Get Firebase auth instance
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        // Get current user
+        FirebaseUser user = auth.getCurrentUser();
 
-        if (auth.getCurrentUser() == null) {
+        if (user == null) {
             startActivity(new Intent(ManageToyActivity.this, LoginChoiceActivity.class));
             finish();
+        } else {
+            userId = user.getUid();
+            // Create reference to collection of toys for current user
+            dbToyCollection = db.collection("users").document(userId).collection("toyCollection");
         }
 
+        // Set Toolbar title
         Toolbar myToolbar = findViewById(R.id.my_add_toolbar);
         if (myToolbar != null) {
             // If there is an information about toy, then we need to show Edit toy title
             if (getIntent().getExtras() != null) {
                 myToolbar.setTitle(R.string.edit_toy);
-            // If there is not such an information, then we need to show Add toy title
+                // If there is not such an information, then we need to show Add toy title
             } else {
                 myToolbar.setTitle(R.string.add_toy);
             }
         }
 
-        // Get current user
-        FirebaseUser user = auth.getCurrentUser();
-        userId = user.getUid();
-
-        db = FirebaseFirestore.getInstance();
-
+        // Set Views
         newToyName = findViewById(R.id.name_edit_text_view);
         newToyYear = findViewById(R.id.year_edit_text_view);
         newToyStory = findViewById(R.id.story_edit_text_view);
         newToyImage = findViewById(R.id.default_picture_image_view);
         addPhoto = findViewById(R.id.camera_image_button);
 
-        // If user wants to edit toy, then show the info about toy that is ready for editing
+        // Show info about toy that is ready for editing
         if (getIntent().getExtras() != null) {
-            currentToy = (Toy) getIntent().getExtras().get("toy");
-            assert currentToy != null;
+            newToy = (Toy) getIntent().getExtras().get("toy");
+            assert newToy != null;
 
-            newToyName.setText(currentToy.getmToyName());
-            newToyYear.setText(currentToy.getmYear());
-            newToyStory.setText(currentToy.getmStory());
+            newToyName.setText(newToy.getmToyName());
+            newToyYear.setText(newToy.getmYear());
+            newToyStory.setText(newToy.getmStory());
 
-            int toyPictureId = currentToy.getmImageResourceId();
+            int toyPictureId = newToy.getmImageResourceId();
             if (toyPictureId != 0) {
                 newToyImage.setImageResource(toyPictureId);
             } else {
-                path = currentToy.getmPath();
+                path = newToy.getmPath();
                 if (!TextUtils.isEmpty(path)) {
                     StorageReference toypicturesRef = storage.getReference(path);
                     Log.i("GLIDE", toypicturesRef.toString());
@@ -121,6 +123,7 @@ public class ManageToyActivity extends AppCompatActivity {
             }
         }
 
+        // Logic for addPhoto button
         addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,87 +131,71 @@ public class ManageToyActivity extends AppCompatActivity {
             }
         });
 
+        // Logic for addToy button
         FloatingActionButton fabAddToy = findViewById(R.id.done_toy_fab);
         fabAddToy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Get current information from TextViews
                 String toyName = newToyName.getText().toString().trim();
                 String toyYear = newToyYear.getText().toString().trim();
                 String toyStory = newToyStory.getText().toString().trim();
 
-                final CollectionReference dbToyCollection = db.collection("users").document(userId).collection("toyCollection");
-
                 if (validateInput(toyName, toyYear)) {
-                    newToy = new Toy(toyName, toyYear);
+                    newToy.setmToyName(toyName);
+                    newToy.setmYear(toyYear);
 
                     if (!TextUtils.isEmpty(toyStory)) {
                         newToy.setmStory(toyStory);
                     }
 
-                    // Update existing toy
-                    if (getIntent().getExtras() != null) {
-                        String documentID = currentToy.getmDocumentId();
-                        DocumentReference dbUpdatedToy = dbToyCollection.document(documentID);
-
-                        if (bitmap != null){
-                            if (currentToy.getmPath() != null){
-                                deleteImage(currentToy.getmPath());
-                            }
-                            saveImage(bitmap);
-                            Log.i("ADD_TOY_SAVE_STORAGE", "Toy image had been added to Firestore Storage");
-                            currentToy.setmPath(path);
-                            currentToy.setmImageResourceId(0);
+                    // If bitmap != null, then user has changed the image
+                    if (bitmap != null) {
+                        // If newToy.getmPath() != null, then this toy had corresponding image in Storage
+                        if (newToy.getmPath() != null) {
+                            // Delete old image from Storage
+                            deleteImage(newToy.getmPath());
+                            Log.i("DELETE_IMAGE", "Toy image " + newToy.getmPath() + " had been deleted from Firestore Storage");
                         }
-
-                        dbUpdatedToy.update("mToyName", toyName, "mYear", toyYear,
-                                "mStory", toyStory,
-                                "mPath", currentToy.getmPath(),
-                                "mImageResourceId", currentToy.getmImageResourceId())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.i("UPDATE_TOY", "DocumentSnapshot successfully updated!");
-                                startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e("UPDATE_TOY", "Error updating document: " + e.getMessage());
-                                Toast.makeText(ManageToyActivity.this, R.string.toy_not_updated, Toast.LENGTH_LONG).show();
-                            }
-                        });
-
-                    // Add new toy
+                        // Save new image in Storage
+                        saveImage(bitmap);
+                        Log.i("ADD_IMAGE", "Toy image " + newToy.getmPath() + " had been added to Firestore Storage");
+                        newToy.setmPath(path);
+                        newToy.setmImageResourceId(0);
                     } else {
-                        // Create documentId
-                        String documentId = UUID.randomUUID().toString();
-                        newToy.setmDocumentId(documentId);
-
-                        // Save image to storage, if user has changed it, or show a default image
-                        if (bitmap != null) {
-                            saveImage(bitmap);
-                            Log.i("ADD_TOY_SAVE_STORAGE", getString(R.string.image_added));
-                            newToy.setmPath(path);
-                        } else {
+                        // If newToy.getmPath() == null, then this toy do not has custom image,
+                        // we need to set default image
+                        if (newToy.getmPath() == null) {
                             newToy.setmImageResourceId(R.drawable.toy);
                         }
-
-                        // Add toy with documentId into DB
-                        dbToyCollection.document(documentId).set(newToy).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    // Task completed successfully
-                                    Toast.makeText(ManageToyActivity.this, R.string.toy_added, Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
-                                } else {
-                                    // Task failed with an exception
-                                    Log.e("ADD_TOY", R.string.toy_not_added + ": " + task.getException());
-                                    Toast.makeText(ManageToyActivity.this, R.string.toy_not_added, Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
                     }
+
+                    // Create mDocumentId for toy, if it does not exists in DB
+                    if (newToy.getmDocumentId() == null) {
+                        String documentId = UUID.randomUUID().toString();
+                        newToy.setmDocumentId(documentId);
+                        dbMessage = R.string.toy_added;
+                        dbErrorMessage = R.string.toy_not_added;
+                    } else {
+                        dbMessage = R.string.toy_updated;
+                        dbErrorMessage = R.string.toy_not_updated;
+                    }
+                    
+                    // Writing newToy into DB
+                    dbToyCollection.document(newToy.getmDocumentId()).set(newToy).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                // Task completed successfully
+                                Toast.makeText(ManageToyActivity.this, dbMessage, Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
+                            } else {
+                                // Task failed with an exception
+                                Log.e("ADD_TOY", R.string.toy_not_added + ": " + task.getException());
+                                Toast.makeText(ManageToyActivity.this, dbErrorMessage, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -323,7 +310,7 @@ public class ManageToyActivity extends AppCompatActivity {
                 });
     }
 
-    private void deleteImage(String path){
+    private void deleteImage(String path) {
         StorageReference toypicturesRef = storage.getReference();
         StorageReference toyToDelete = toypicturesRef.child(path);
 
