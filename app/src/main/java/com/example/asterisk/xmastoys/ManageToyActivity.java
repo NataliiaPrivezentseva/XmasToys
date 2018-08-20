@@ -47,6 +47,7 @@ public class ManageToyActivity extends AppCompatActivity {
     private EditText newToyStory;
     private ImageView newToyImage;
     private ImageButton addPhoto;
+    private FloatingActionButton fabDeleteToy;
 
     private Bitmap bitmap;
     private String path;
@@ -84,6 +85,10 @@ public class ManageToyActivity extends AppCompatActivity {
             // If there is an information about toy, then we need to show Edit toy title
             if (getIntent().getExtras() != null) {
                 myToolbar.setTitle(R.string.edit_toy);
+
+                fabDeleteToy = findViewById(R.id.delete_toy_fab);
+                fabDeleteToy.setVisibility(View.VISIBLE);
+
                 // If there is not such an information, then we need to show Add toy title
             } else {
                 myToolbar.setTitle(R.string.add_toy);
@@ -127,6 +132,36 @@ public class ManageToyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPictureDialog();
+            }
+        });
+
+        // Logic for fabDeleteToy button
+        fabDeleteToy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                //todo extract strings
+                builder.setTitle("Confirm");
+                builder.setMessage("Are you sure that you want to delete this toy?");
+
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //todo delete photo, delete toy
+
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
             }
         });
 

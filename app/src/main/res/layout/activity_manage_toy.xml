@@ -110,6 +110,17 @@
             app:fabSize="normal"
             app:srcCompat="@drawable/ic_done" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/delete_toy_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="@dimen/button_margin"
+            android:visibility="invisible"
+            app:elevation="5dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_delete" />
+
     </android.support.design.widget.CoordinatorLayout>
 
 </android.support.constraint.ConstraintLayout>
