@@ -44,7 +44,8 @@
 
         <activity
             android:name=".ManageToyActivity"
-            android:label="@string/add_toy">
+            android:label="@string/add_toy"
+            android:theme="@style/ManageActivityTheme">
         </activity>
 
     </application>

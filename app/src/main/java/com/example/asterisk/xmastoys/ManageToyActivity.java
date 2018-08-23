@@ -2,6 +2,7 @@ package com.example.asterisk.xmastoys;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -10,6 +11,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +44,7 @@ import java.util.UUID;
 public class ManageToyActivity extends AppCompatActivity {
     static final int GALLERY = 0;
     static final int CAMERA = 1;
+    static final int MY_PERMISSIONS_REQUEST_CAMERA = 2;
 
     private EditText newToyName;
     private EditText newToyYear;
@@ -79,13 +83,14 @@ public class ManageToyActivity extends AppCompatActivity {
             dbToyCollection = db.collection("users").document(userId).collection("toyCollection");
         }
 
-        // Set Toolbar title
+        // Set Toolbar title and fabDeleteToy button
         Toolbar myToolbar = findViewById(R.id.my_add_toolbar);
         if (myToolbar != null) {
             // If there is an information about toy, then we need to show Edit toy title
             if (getIntent().getExtras() != null) {
                 myToolbar.setTitle(R.string.edit_toy);
 
+                // Set fabDeleteToy button
                 fabDeleteToy = findViewById(R.id.delete_toy_fab);
                 fabDeleteToy.setVisibility(View.VISIBLE);
 
@@ -132,36 +137,6 @@ public class ManageToyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPictureDialog();
-            }
-        });
-
-        // Logic for fabDeleteToy button
-        fabDeleteToy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                //todo extract strings
-                builder.setTitle("Confirm");
-                builder.setMessage("Are you sure that you want to delete this toy?");
-
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //todo delete photo, delete toy
-
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-
             }
         });
 
@@ -234,6 +209,61 @@ public class ManageToyActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Logic for fabDeleteToy button
+        if (fabDeleteToy != null) {
+            fabDeleteToy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ManageToyActivity.this);
+                    //todo extract strings
+                    builder.setTitle("Confirm");
+                    builder.setMessage("Are you sure that you want to delete this toy?");
+
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //todo delete toy
+                            if (newToy.getmPath() != null) {
+                                // Delete toy image from Storage
+                                deleteImage(newToy.getmPath());
+                                Log.i("DELETE_IMAGE", "Toy image " + newToy.getmPath() + " had been deleted from Firestore Storage");
+                            }
+                            // Deleting newToy from DB
+                            dbToyCollection.document(newToy.getmDocumentId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // Task completed successfully
+                                        //todo task.getException()?
+                                        dbMessage = R.string.toy_deleted;
+                                        Log.i("DELETE_FROM_DB", dbMessage + ": " + task.getException());
+                                        Toast.makeText(ManageToyActivity.this, dbMessage, Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
+                                    } else {
+                                        // Task failed with an exception
+                                        dbMessage = R.string.toy_not_deleted;
+                                        Log.e("DELETE_FROM_DB", dbErrorMessage + ": " + task.getException());
+                                        Toast.makeText(ManageToyActivity.this, dbErrorMessage, Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                            dialog.dismiss();
+                        }
+                    });
+
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                }
+            });
+        }
     }
 
     private boolean validateInput(String toyName, String toyYear) {
@@ -292,8 +322,16 @@ public class ManageToyActivity extends AppCompatActivity {
     }
 
     private void takePhotoFromCamera() {
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Request the permission
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        } else {
+            // Permission has already been granted, use camera
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA);
+        }
     }
 
     @Override
@@ -352,13 +390,31 @@ public class ManageToyActivity extends AppCompatActivity {
         toyToDelete.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.i("ADD_TOY_DELETE_IMAGE", getString(R.string.image_deleted));
+                Log.i("DELETE_IMAGE", getString(R.string.image_deleted));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.e("ADD_TOY_DELETE_IMAGE", getString(R.string.image_not_deleted) + ": " + exception.getMessage());
+                Log.e("DELETE_IMAGE", getString(R.string.image_not_deleted) + ": " + exception.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    takePhotoFromCamera();
+                } else {
+                    // Permission Denied
+                    Toast.makeText(ManageToyActivity.this, "CAMERA Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

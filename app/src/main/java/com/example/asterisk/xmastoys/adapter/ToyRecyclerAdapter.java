@@ -55,6 +55,7 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
         int imageResId = mToyCollection.get(position).getmImageResourceId();
         if (imageResId != 0) {
             holder.pictureImageView.setImageResource(imageResId);
+//            holder.pictureImageView.setImageResource(R.drawable.toy);
         } else {
             String path = mToyCollection.get(position).getmPath();
             if(!TextUtils.isEmpty(path)) {

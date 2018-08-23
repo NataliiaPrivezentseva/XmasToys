@@ -11,6 +11,17 @@
         <item name="titleTextColor">@color/colorTextIcons</item>
     </style>
 
+    <!-- Base application theme without a title bar. -->
+    <style name="ManageActivityTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="titleTextColor">@color/colorTextIcons</item>
+    </style>
+
     <style name="AppThemeBar2" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- title text color -->
         <item name="android:textColorPrimary">@color/colorTextIcons</item>
