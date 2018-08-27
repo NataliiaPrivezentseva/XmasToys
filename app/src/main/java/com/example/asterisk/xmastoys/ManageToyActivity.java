@@ -198,7 +198,9 @@ public class ManageToyActivity extends AppCompatActivity {
                                 // Task completed successfully
                                 Log.i("WRITE_TO_DB", dbMessage + ": " + task.getException());
                                 Toast.makeText(ManageToyActivity.this, dbMessage, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
+                                Intent writeIntent = new Intent(ManageToyActivity.this, MainActivity.class);
+                                writeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(writeIntent);
                             } else {
                                 // Task failed with an exception
                                 Log.e("WRITE_TO_DB", dbErrorMessage + ": " + task.getException());
@@ -238,7 +240,9 @@ public class ManageToyActivity extends AppCompatActivity {
                                         dbMessage = R.string.toy_deleted;
                                         Log.i("DELETE_FROM_DB", dbMessage + ": " + task.getException());
                                         Toast.makeText(ManageToyActivity.this, dbMessage, Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(ManageToyActivity.this, MainActivity.class));
+                                        Intent deleteIntent = new Intent(ManageToyActivity.this, MainActivity.class);
+                                        deleteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(deleteIntent);
                                     } else {
                                         // Task failed with an exception
                                         dbMessage = R.string.toy_not_deleted;
