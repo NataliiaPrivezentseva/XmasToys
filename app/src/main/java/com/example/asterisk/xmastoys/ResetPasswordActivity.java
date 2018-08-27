@@ -84,6 +84,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                             Intent intent = new Intent(ResetPasswordActivity.this,
                                     EmailLoginActivity.class);
                             intent.putExtras(infoToSend);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         } else {
                             Toast.makeText(ResetPasswordActivity.this, R.string.failed_to_send_instructions,

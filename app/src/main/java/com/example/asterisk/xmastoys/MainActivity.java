@@ -38,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         //todo maybe finish() should be called before starting new activity?
         if (auth.getCurrentUser() == null) {
-            startActivity(new Intent(MainActivity.this, LoginChoiceActivity.class));
-            finish();
+            Intent intent = new Intent(MainActivity.this, LoginChoiceActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         } else {
             // Now we are setting the view for logged in user
             setContentView(R.layout.activity_main);
@@ -112,9 +113,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void logOut(){
         auth.signOut();
-        //closing activity
+        // Closing activity
         finish();
-        //starting login activity
-        startActivity(new Intent(MainActivity.this, LoginChoiceActivity.class));
+        // Staring login activity
+        Intent intent = new Intent(MainActivity.this, LoginChoiceActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

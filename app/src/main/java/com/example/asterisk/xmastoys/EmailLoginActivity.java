@@ -155,7 +155,9 @@ public class EmailLoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.successfully_logged_in, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(EmailLoginActivity.this, MainActivity.class));
+                            Intent intent = new Intent(EmailLoginActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                             finish();
                         } else {
                             //display some message here
