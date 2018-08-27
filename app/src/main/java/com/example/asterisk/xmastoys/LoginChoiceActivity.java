@@ -29,6 +29,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(LoginChoiceActivity.this,
                         EmailLoginActivity.class));
+                // Removing activity from back stack
                 finish();
             }
         });

@@ -158,6 +158,7 @@ public class EmailLoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(EmailLoginActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
+                            // Removing activity from back stack
                             finish();
                         } else {
                             //display some message here

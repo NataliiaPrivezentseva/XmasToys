@@ -76,6 +76,7 @@ public class ManageToyActivity extends AppCompatActivity {
 
         if (user == null) {
             startActivity(new Intent(ManageToyActivity.this, LoginChoiceActivity.class));
+            // Removing activity from back stack
             finish();
         } else {
             userId = user.getUid();

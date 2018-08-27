@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        //todo maybe finish() should be called before starting new activity?
         if (auth.getCurrentUser() == null) {
             Intent intent = new Intent(MainActivity.this, LoginChoiceActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logOut(){
         auth.signOut();
-        // Closing activity
+        // Removing activity from back stack
         finish();
         // Staring login activity
         Intent intent = new Intent(MainActivity.this, LoginChoiceActivity.class);
