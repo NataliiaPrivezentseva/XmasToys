@@ -48,6 +48,10 @@ public class EmailLoginActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.log_email_edit_text);
         inputPassword = findViewById(R.id.log_password);
 
+        if (getIntent().getExtras() != null){
+            inputEmail.setText(getIntent().getExtras().getString("eMail"));
+        }
+
         TextView resetPassword = findViewById(R.id.forgot_password_text);
 
         resetPassword.setOnClickListener(new View.OnClickListener() {
