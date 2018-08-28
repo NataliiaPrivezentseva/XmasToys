@@ -64,6 +64,7 @@
                         android:scaleType="centerCrop"
                         android:layout_gravity="center"
                         android:src="@drawable/toy"
+                        android:background="@color/colorAccent"
                         tools:ignore="contentDescription"/>
 
                     <ImageView
@@ -79,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|end"
                         android:src="@drawable/ic_camera"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/colorAccent"
                         android:layout_margin="10dp"
                         tools:ignore="contentDescription" />
                 </FrameLayout>

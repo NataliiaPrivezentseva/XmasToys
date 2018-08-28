@@ -39,6 +39,7 @@
                 android:layout_height="@dimen/gridView_imageSide"
                 android:scaleType="centerCrop"
                 tools:ignore="contentDescription"
+                android:background="@color/colorTextIcons"
                 android:layout_gravity="center"/>
 
             <ImageView
