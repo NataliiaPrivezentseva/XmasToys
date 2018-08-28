@@ -18,7 +18,7 @@
     <string name="e_mail">E-mail</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
-    <string name="forgot_password">Forgot your password?</string>
+    <string name="forgot_password">Forgot password?</string>
     <string name="sign_in_with_email">Sign in with e-mail</string>
     <string name="login">Log in</string>
     <string name="logout">Log out</string>
@@ -38,7 +38,7 @@
     <string name="check_email">Please, check your e-mail</string>
     <string name="password_length">Password should contain at least 6 symbols</string>
     <string name="email_error">E-mail address is wrong</string>
-    <string name="password_error">Password should be more than 6 characters</string>
+    <string name="password_error">Password should be at least 6 characters</string>
     <string name="toy_added">Toy has been added</string>
     <string name="toy_not_added">Failed to add toy</string>
     <string name="toy_not_updated">Failed to update toy</string>
