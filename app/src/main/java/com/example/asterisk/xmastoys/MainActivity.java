@@ -110,13 +110,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void logOut(){
+    private void logOut() {
         auth.signOut();
         // Removing activity from back stack
         finish();
         // Staring login activity
-        Intent intent = new Intent(MainActivity.this, LoginChoiceActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        startActivity(new Intent(MainActivity.this, LoginChoiceActivity.class));
     }
 }
