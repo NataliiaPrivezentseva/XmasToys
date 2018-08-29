@@ -219,13 +219,11 @@ public class ManageToyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ManageToyActivity.this);
-                    //todo extract strings
-                    builder.setTitle("Confirm");
-                    builder.setMessage("Are you sure that you want to delete this toy?");
+                    builder.setTitle(R.string.confirm);
+                    builder.setMessage(R.string.sure_delete_toy);
 
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            //todo delete toy
                             if (newToy.getmPath() != null) {
                                 // Delete toy image from Storage
                                 deleteImage(newToy.getmPath());
@@ -237,9 +235,8 @@ public class ManageToyActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         // Task completed successfully
-                                        //todo task.getException()?
                                         dbMessage = R.string.toy_deleted;
-                                        Log.i("DELETE_FROM_DB", dbMessage + ": " + task.getException());
+                                        Log.i("DELETE_FROM_DB", getString(dbMessage));
                                         Toast.makeText(ManageToyActivity.this, dbMessage, Toast.LENGTH_LONG).show();
                                         Intent deleteIntent = new Intent(ManageToyActivity.this, MainActivity.class);
                                         deleteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -247,7 +244,7 @@ public class ManageToyActivity extends AppCompatActivity {
                                     } else {
                                         // Task failed with an exception
                                         dbMessage = R.string.toy_not_deleted;
-                                        Log.e("DELETE_FROM_DB", dbErrorMessage + ": " + task.getException());
+                                        Log.e("DELETE_FROM_DB", getString(dbErrorMessage) + ": " + task.getException());
                                         Toast.makeText(ManageToyActivity.this, dbErrorMessage, Toast.LENGTH_LONG).show();
                                     }
                                 }
