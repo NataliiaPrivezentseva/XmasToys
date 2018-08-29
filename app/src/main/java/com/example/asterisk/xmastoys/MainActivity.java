@@ -44,11 +44,6 @@ public class MainActivity extends AppCompatActivity {
             // Now we are setting the view for logged in user
             setContentView(R.layout.activity_main);
 
-            Toolbar myToolbar = findViewById(R.id.my_toolbar);
-            if (myToolbar != null) {
-                setSupportActionBar(myToolbar);
-            }
-
             // Get current user
             FirebaseUser user = auth.getCurrentUser();
             String userId = user.getUid();

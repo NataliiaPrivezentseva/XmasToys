@@ -16,14 +16,6 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/my_add_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:theme="@style/AppThemeBar2"
-                app:popupTheme="@style/AppThemeBar2" />
-
             <EditText
                 android:id="@+id/name_edit_text_view"
                 android:layout_width="wrap_content"

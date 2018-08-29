@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -31,10 +30,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        Toolbar myToolbar = findViewById(R.id.reset_password_toolbar);
-        if (myToolbar != null) {
-            setSupportActionBar(myToolbar);
-        }
+        setTitle(R.string.reset_password);
 
         progressDialog = new ProgressDialog(this);
 

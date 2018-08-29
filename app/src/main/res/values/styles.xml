@@ -1,5 +1,13 @@
 <resources>
 
+    <!-- Main application theme with an ActionBar. -->
+    <style name="MainAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="titleTextColor">@color/colorTextIcons</item>
+    </style>
+    
     <!-- Base application theme without a title bar. -->
     <style name="AppThemeBar" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->

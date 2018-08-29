@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeBar">
+        android:theme="@style/MainAppTheme">
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -39,13 +39,12 @@
         </activity>
 
         <activity
-            android:name=".OneToyActivity">
+            android:name=".OneToyActivity"
+            android:theme="@style/AppThemeBar">
         </activity>
 
         <activity
-            android:name=".ManageToyActivity"
-            android:label="@string/add_toy"
-            android:theme="@style/ManageActivityTheme">
+            android:name=".ManageToyActivity">
         </activity>
 
     </application>

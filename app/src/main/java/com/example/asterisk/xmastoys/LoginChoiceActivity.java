@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,10 +14,7 @@ public class LoginChoiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_choice);
 
-        Toolbar myToolbar = findViewById(R.id.login_choice_toolbar);
-        if (myToolbar != null) {
-            setSupportActionBar(myToolbar);
-        }
+        setTitle(R.string.login_choice);
 
         Button eMailButton = findViewById(R.id.email_button);
         Button phoneButton = findViewById(R.id.phone_button);

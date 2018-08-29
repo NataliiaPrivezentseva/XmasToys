@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -84,22 +83,19 @@ public class ManageToyActivity extends AppCompatActivity {
             dbToyCollection = db.collection("users").document(userId).collection("toyCollection");
         }
 
-        // Set Toolbar title and fabDeleteToy button
-        Toolbar myToolbar = findViewById(R.id.my_add_toolbar);
-        if (myToolbar != null) {
-            // If there is an information about toy, then we need to show Edit toy title
-            if (getIntent().getExtras() != null) {
-                myToolbar.setTitle(R.string.edit_toy);
+        // Set ActionBar title and fabDeleteToy button
+        if (getIntent().getExtras() != null) {
+            setTitle(R.string.edit_toy);
 
-                // Set fabDeleteToy button
-                fabDeleteToy = findViewById(R.id.delete_toy_fab);
-                fabDeleteToy.setVisibility(View.VISIBLE);
+            // Set fabDeleteToy button
+            fabDeleteToy = findViewById(R.id.delete_toy_fab);
+            fabDeleteToy.setVisibility(View.VISIBLE);
 
-                // If there is not such an information, then we need to show Add toy title
-            } else {
-                myToolbar.setTitle(R.string.add_toy);
-            }
+            // If there is not such an information, then we need to show Add toy title
+        } else {
+            setTitle(R.string.add_toy);
         }
+
 
         // Set Views
         newToyName = findViewById(R.id.name_edit_text_view);
