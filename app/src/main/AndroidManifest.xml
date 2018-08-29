@@ -40,7 +40,7 @@
 
         <activity
             android:name=".OneToyActivity"
-            android:theme="@style/AppThemeBar">
+            android:theme="@style/AppThemeWithoutActionBar">
         </activity>
 
         <activity
