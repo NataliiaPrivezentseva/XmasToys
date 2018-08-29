@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText inputEmail;
     private ProgressDialog progressDialog;
+
+    private String email;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     }
 
     private void resetPassword() {
-        String email = inputEmail.getText().toString().trim();
+        email = inputEmail.getText().toString().trim();
 
         // Check if email is empty
         if(TextUtils.isEmpty(email)){
@@ -63,13 +66,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
             return;
         }
 
-        //TODO do we need to  check, if this e-mail has been registered?
-
         // If e-mail is not empty, display a progress dialog
         progressDialog.setMessage(getString(R.string.sending_instructions_wait));
         progressDialog.show();
 
-        //todo log results!
         auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -77,6 +77,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(ResetPasswordActivity.this, R.string.sent_instructions,
                                     Toast.LENGTH_SHORT).show();
+                            Log.i("RESET_PASSWORD", "Further instructions have been sent to " + email);
 
                             Bundle infoToSend = new Bundle();
                             infoToSend.putString("eMail", inputEmail.getText().toString());
@@ -89,6 +90,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(ResetPasswordActivity.this, R.string.failed_to_send_instructions,
                                     Toast.LENGTH_SHORT).show();
+                            Log.e("RESET_PASSWORD", getString(R.string.failed_to_send_instructions));
                         }
                         progressDialog.dismiss();
                     }
