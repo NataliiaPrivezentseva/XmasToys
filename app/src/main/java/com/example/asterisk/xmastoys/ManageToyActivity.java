@@ -119,7 +119,7 @@ public class ManageToyActivity extends AppCompatActivity {
 
             int toyPictureId = newToy.getmImageResourceId();
             if (toyPictureId != 0) {
-                newToyImage.setImageResource(toyPictureId);
+                newToyImage.setImageResource(R.drawable.toy);
             } else {
                 path = newToy.getmPath();
                 if (!TextUtils.isEmpty(path)) {

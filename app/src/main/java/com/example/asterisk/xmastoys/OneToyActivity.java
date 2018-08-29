@@ -40,7 +40,7 @@ public class OneToyActivity extends AppCompatActivity {
 
             int toyPictureId = currentToy.getmImageResourceId();
             if (toyPictureId != 0) {
-                toyPicture.setImageResource(toyPictureId);
+                toyPicture.setImageResource(R.drawable.toy);
             } else {
                 String path = currentToy.getmPath();
                 if (!TextUtils.isEmpty(path)) {
