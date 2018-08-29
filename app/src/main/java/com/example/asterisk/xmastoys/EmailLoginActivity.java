@@ -169,8 +169,7 @@ public class EmailLoginActivity extends AppCompatActivity {
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.login_error, Toast.LENGTH_LONG).show();
                             if (task.getException() != null) {
-                                String error = task.getException().getMessage();
-                                Log.e("LOG_IN_USER", error);
+                                Log.e("LOG_IN_USER", task.getException().getMessage());
                             }
                         }
                         progressDialog.dismiss();
@@ -211,8 +210,7 @@ public class EmailLoginActivity extends AppCompatActivity {
                             Toast.makeText(EmailLoginActivity.this,
                                     R.string.registration_error, Toast.LENGTH_LONG).show();
                             if (task.getException() != null) {
-                                String error = task.getException().getMessage();
-                                Log.e("REGISTER_USER", error);
+                                Log.e("REGISTER_USER", task.getException().getMessage());
                             }
                         }
                         progressDialog.dismiss();

@@ -197,14 +197,14 @@ public class ManageToyActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 // Task completed successfully
-                                Log.i("WRITE_TO_DB", dbMessage + ": " + task.getException());
+                                Log.i("WRITE_TO_DB", getString(dbMessage));
                                 Toast.makeText(ManageToyActivity.this, dbMessage, Toast.LENGTH_LONG).show();
                                 Intent writeIntent = new Intent(ManageToyActivity.this, MainActivity.class);
                                 writeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(writeIntent);
                             } else {
                                 // Task failed with an exception
-                                Log.e("WRITE_TO_DB", dbErrorMessage + ": " + task.getException());
+                                Log.e("WRITE_TO_DB", getString(dbErrorMessage) + ": " + task.getException());
                                 Toast.makeText(ManageToyActivity.this, dbErrorMessage, Toast.LENGTH_LONG).show();
                             }
                         }
