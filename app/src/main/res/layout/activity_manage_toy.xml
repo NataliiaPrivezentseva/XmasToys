@@ -26,7 +26,8 @@
                 android:layout_marginStart="@dimen/viewMargin"
                 android:layout_marginTop="@dimen/viewMargin"
                 android:hint="@string/toy_name"
-                android:inputType="text" />
+                android:inputType="textMultiLine"
+                android:maxLength="100"/>
 
             <EditText
                 android:id="@+id/year_edit_text_view"
