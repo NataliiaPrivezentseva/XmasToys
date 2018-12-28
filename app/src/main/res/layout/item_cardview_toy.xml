@@ -21,61 +21,61 @@
 
     <!--todo extract dimens resources-->
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/toy_picture_image_view"
-                android:layout_width="@dimen/gridView_imageSide"
-                android:layout_height="@dimen/gridView_imageSide"
-                android:scaleType="centerCrop"
-                tools:ignore="contentDescription"
-                android:background="@color/colorTextIcons"
-                android:layout_gravity="center"/>
-
-            <ImageView
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:src="@drawable/frame"
-                tools:ignore="contentDescription"
-                android:layout_gravity="center"/>
-
-        </FrameLayout>
-
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical"
-            android:layout_marginStart="@dimen/viewMargin"
-            android:gravity="center_vertical">
+            android:layout_width="110dp"
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/toy_name_text_view"
+            <FrameLayout
+                android:id="@+id/image_frame"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Name of toy"
-                android:textColor="@color/colorTextIcons"
-                android:textSize="@dimen/bigTextSize" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/toy_picture_image_view"
+                    android:layout_width="@dimen/gridView_imageSide"
+                    android:layout_height="@dimen/gridView_imageSide"
+                    android:layout_gravity="center"
+                    android:background="@color/colorTextIcons"
+                    android:scaleType="centerCrop"
+                    tools:ignore="contentDescription" />
+
+                <ImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/frame"
+                    tools:ignore="contentDescription" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/toy_year_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/toy_name_text_view"
-                android:layout_marginTop="@dimen/viewMargin"
-                tools:text="2018/2019"
+                android:layout_below="@id/image_frame"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/colorTextIcons"
-                android:textSize="@dimen/normalTextSize" />
+                android:textSize="@dimen/normalTextSize"
+                tools:text="2018" />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/toy_name_text_view"
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/viewMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="@dimen/bigTextSize"
+            tools:text="Name of toy" />
 
     </LinearLayout>
 
