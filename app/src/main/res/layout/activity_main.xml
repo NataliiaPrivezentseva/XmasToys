@@ -21,7 +21,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/button_margin"
         android:visibility="visible"
-        android:backgroundTint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:elevation="5dp"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_add" />
