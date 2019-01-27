@@ -2,6 +2,7 @@ package com.example.asterisk.xmastoys.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -38,7 +39,8 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
@@ -47,8 +49,8 @@ public class ToyRecyclerAdapter extends RecyclerView.Adapter<ToyRecyclerAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+//        int position2 = holder.getAdapterPosition();
         holder.toyNameTextView.setText(mToyCollection.get(position).getmToyName());
         holder.toyYearTextView.setText(mToyCollection.get(position).getmYear());
 
